@@ -16,7 +16,36 @@
           {
             "group": "Produtos",
             "pages": [
-              "produtos/cadastrar-produto"
+              "web/produtos/cadastro-produtos",
+              "web/produtos/cadastro-marcas",
+              "web/produtos/cadastro-departamento",
+              "web/produtos/cadastro-cores",
+              "web/produtos/entrada-produtos"
+            ]
+          },
+          {
+            "group": "Clientes",
+            "pages": [
+              "web/clientes/frente-caixa",
+              "web/clientes/historico-cliente",
+              "web/clientes/link-compartilhamento",
+              "web/clientes/vale-presente"
+            ]
+          },
+          {
+            "group": "Financeiro",
+            "pages": [
+              "web/financeiro/abrir-caixa",
+              "web/financeiro/contas-pagar",
+              "web/financeiro/contas-receber",
+              "web/financeiro/despesa-caixa",
+              "web/financeiro/fechar-caixa"
+            ]
+          },
+          {
+            "group": "Relatórios",
+            "pages": [
+              "web/relatorios/resumo-vendas",
             ]
           }
         ]
