@@ -11,17 +11,12 @@
   "navigation": {
     "tabs": [
       {
-        "tab": "Web",
+        "tab": "Agulhão Web",
         "groups": [
           {
             "group": "Produtos",
             "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
+              "produtos/cadastrar-produto"
             ]
           }
         ]
