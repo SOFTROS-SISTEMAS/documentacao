@@ -45,7 +45,7 @@
           {
             "group": "Relatórios",
             "pages": [
-              "web/relatorios/resumo-vendas",
+              "web/relatorios/resumo-vendas"
             ]
           }
         ]
