@@ -5,7 +5,7 @@
   "colors": {
     "primary": "#013e85",
     "light": "#013e85",
-    "dark": "#013e85"
+    "dark": "#80baff"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -75,13 +75,13 @@
       "anchors": [
         {
           "anchor": "Site",
-          "href": "https://mintlify.com/docs",
-          "icon": "web"
+          "href": "https://agulhao.com.br",
+          "icon": "globe"
         },
         {
           "anchor": "Teste Grátis",
           "href": "https://mintlify.com/community",
-          "icon": "slack"
+          "icon": "fire"
         },
         {
           "anchor": "Novidades",
@@ -99,7 +99,7 @@
     "links": [
       {
         "label": "Suporte",
-        "href": "https://api.whatsapp.com/send?phone=+554431999000"
+        "href": "https://api.whatsapp.com/send?phone=554431999000"
       }
     ]
   },
