@@ -8,6 +8,9 @@
     "dark": "#80baff"
   },
   "favicon": "/favicon.svg",
+  "search": {
+    "prompt": "Pesquisar..."
+  },
   "navigation": {
     "tabs": [
       {
@@ -35,37 +38,15 @@
           {
             "group": "Financeiro",
             "pages": [
-              "web/financeiro/abrir-caixa",
               "web/financeiro/contas-pagar",
               "web/financeiro/contas-receber",
-              "web/financeiro/despesa-caixa",
-              "web/financeiro/fechar-caixa"
+              "web/financeiro/caixa"
             ]
           },
           {
             "group": "Relatórios",
             "pages": [
               "web/relatorios/resumo-vendas"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API Reference",
-        "groups": [
-          {
-            "group": "API Documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint Examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
             ]
           }
         ]
