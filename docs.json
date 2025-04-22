@@ -17,6 +17,12 @@
         "tab": "Agulhão Web",
         "groups": [
           {
+            "group": "Geral",
+            "pages": [
+              "web/geral/favoritos"
+            ]
+          },
+          {
             "group": "Produtos",
             "pages": [
               "web/produtos/cadastro-produtos",
