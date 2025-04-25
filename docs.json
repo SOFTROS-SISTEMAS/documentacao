@@ -29,7 +29,8 @@
               "web/produtos/cadastro-marcas",
               "web/produtos/cadastro-departamento",
               "web/produtos/cadastro-cores",
-              "web/produtos/entrada-produtos"
+              "web/produtos/entrada-produtos",
+              "web/produtos/cadastro-grupos"
             ]
           },
           {
