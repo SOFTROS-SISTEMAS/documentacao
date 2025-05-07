@@ -47,7 +47,8 @@
             "pages": [
               "web/financeiro/contas-pagar",
               "web/financeiro/contas-receber",
-              "web/financeiro/caixa"
+              "web/financeiro/caixa",
+              "web/financeiro/TEF"
             ]
           },
           {
