@@ -61,7 +61,14 @@
       },
       {
         "tab": "API",
-        "openapi": "api/openapi.json"
+        "groups": [
+          {
+            "group": "Autenticação",
+            "pages": [
+              "api/introduction"
+            ]
+          }
+        ]
       }
     ],
     "global": {
@@ -73,7 +80,7 @@
         },
         {
           "anchor": "Teste Grátis",
-          "href": "https://mintlify.com/community",
+          "href": "https://agulhao.com.br/teste",
           "icon": "fire"
         },
         {
@@ -82,6 +89,12 @@
           "icon": "newspaper"
         }
       ]
+    }
+  },
+  "api": {
+    "examples": {
+      "languages": ["curl"],
+      "defaults": "required"
     }
   },
   "logo": {
