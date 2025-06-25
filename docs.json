@@ -58,6 +58,10 @@
             ]
           }
         ]
+      },
+      {
+        "tab": "API",
+        "openapi": "api/openapi.json"
       }
     ],
     "global": {
