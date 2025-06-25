@@ -65,7 +65,7 @@
           {
             "group": "Autenticação",
             "pages": [
-              "api/introduction"
+              "api-reference/introduction"
             ]
           }
         ]
