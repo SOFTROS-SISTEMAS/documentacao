@@ -1,0 +1,33 @@
+---
+title: "Chave de integração"
+description: "Exemplo de como gerar chave de integração no Agulhão"
+---
+
+# Gerando a chave de acesso
+
+Criar uma chave de integração no Agulhão é um processo rápido e fácil. Basta seguir estes passos:
+
+1. **Faça login no Agulhão**: Acesse o sistema Agulhão e entre na sua conta.
+2. **Navegue até integrações**: No menu principal, vá em **Diversos** e selecione **Integrações**.
+3. **Escolha sua filial e integração**: Você verá uma lista das suas filiais. Selecione a **filial** com a qual deseja trabalhar e, em seguida, escolha a **opção de integração** que você precisa.
+4. **Gere a chave**: Com a integração selecionada, clique no botão "**Criar chave de acesso**".
+
+![Tela onde lista as filiais e as integrações disponíveis](/images/integracoes-filiais.png)
+
+Depois de gerar a chave, você poderá configurar mais detalhes para sua integração. Por exemplo, você pode definir um tipo de lançamento padrão para os pedidos.
+
+Se certos campos não estiverem disponíveis para a integração, ou se você os deixar em branco, o sistema usará as configurações padrões da empresa.
+
+<Danger>
+  É crucial <u>manter a chave gerada em segurança</u>. Esta chave concede controle sobre o sistema via API. Certifique-se de <u>armazená-la de forma segura</u> e <u>compartilhá-la apenas com o responsável pela integração</u>.
+</Danger>
+
+# Como usar a chave de integração
+
+Todas as requisições à API do Agulhão exigem que a chave de integração seja incluída no cabeçalho da requisição, usando o atributo `x-api-key`. Veja um exemplo:
+
+```curl
+curl --request GET \
+  --url https://api-integracoes.agulhao.com.br/filiais \
+  --header 'x-api-key: 7c6a243b-fe75-461f-935d-d8ddf454b75b'
+```

@@ -61,11 +61,18 @@
       },
       {
         "tab": "API",
+        "openapi": "api/openapi.json",
         "groups": [
           {
             "group": "Autenticação",
             "pages": [
-              "api-reference/introduction"
+              "api/gerando-chave"
+            ]
+          },
+          {
+            "group": "Filiais",
+            "pages": [
+              "api/filiais/buscar"
             ]
           }
         ]
