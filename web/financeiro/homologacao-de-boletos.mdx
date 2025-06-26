@@ -1,0 +1,127 @@
+---
+title: "Homologação de Boletos"
+description: "Homologação habilita a emissão de boletos via remessa ou API com Banco do Brasil e Sicredi."
+---
+
+**A homologação permite a emissão de boletos por meio de remessa ou API**, garantindo que o sistema Agulhão esteja apto a operar com instituições bancárias de forma integrada e automatizada.
+
+---
+
+## **Banco do Brasil**
+
+Para homologar e emitir boletos, basta configurar o **local de cobrança** com os seguintes dados:
+
+- Número da última remessa
+- Número de dias para protesto
+- Juros após vencimento
+- Número do convênio e carteira
+- Multa após vencimento
+
+---
+
+## **Sicredi**
+
+### **Remessas Bancárias**
+
+Esse processo realiza automaticamente operações como **emissão de boletos**, **baixa de títulos** e **protestos**.
+
+**Para iniciar:**
+
+1 — O cliente deve solicitar, através do **Sicredi Internet Banking**, a **chave master** necessária para habilitar o uso de remessas bancárias.
+
+![(img01).jpeg](/images/\(img01\).jpeg)
+
+![(img02).png](/images/\(img02\).png)
+
+![(img03).png](/images/\(img03\).png)
+
+### **3. Configurações no Menu Extras**
+
+Acesse o **Menu Extras → Configurações**, vá até a **aba Financeiro** e defina:
+
+- **Configuração 219 — Responsável pelo Setor Financeiro**\
+  Informe o **código do(s) funcionário(s)** responsável(is) pelo setor financeiro. Esses usuários receberão **notificações** caso alguma operação bancária não seja remetida corretamente.
+- **Configuração 247 — Utiliza Integração Bancária Online**\
+  Defina como **Sim ou Não**, conforme a empresa deseja ou não utilizar a API bancária automatizada.
+- **Configuração 248 — API Bancos Online: Ações Automáticas**\
+  Escolha quais ações o sistema deve realizar automaticamente:
+  - **[A] Registro de Títulos**
+  - **[B] Baixa de Títulos**
+  - **[C] Protesto de Títulos** _(válido apenas para bancos homologados)_\
+    Exemplo de preenchimento: **[A,B,C]**
+
+![(img04) (1).png](/images/\(img04\)\(1\).png)
+
+## **Etapas Gerais para o Sicredi**
+
+### **1 — Cadastrar a Conta**
+
+- **Banco:** 748
+- **Agência:** Número sem dígito
+- **Dígito Verificador Agência:** Posto com 2 dígitos (ex.: Palotina = 05)
+- **Número da Conta:** 5 dígitos, com zeros à esquerda, **sem dígito**
+- **Cedente:** Mesma conta, **com dígito separado**
+- **Tipo Cobrança:** 1
+- **Nosso Nº Atual:** Próximo número de boleto (caso já utilize cobrança); caso contrário, deixe **1**
+- **Byte:** 2
+
+---
+
+### **2 — Cadastrar o Local de Cobrança**
+
+- **Local de Pagamento:** _PAGÁVEL PREFERENCIALMENTE NAS COOPERATIVAS DE CRÉDITO DO SICREDI_
+- **Selecionar a conta** do Sicredi
+- **Destacar duplicatas na NFe:** marque “**GERAR DUPLICATAS NA NFE**”, se desejar
+- **Tipo de Impressão:** Boleto ou Carnê
+- **Envio do Boleto:** _Envio pelo cliente_
+- **Juros e Multa:** Definidos apenas para **impressão**, **não enviados por API**
+- **Carteira:** 1
+
+---
+
+### **3 — Homologação**
+
+- **Configuração 247:** Deixe como **NÃO**
+- **Gerar 10 boletos**, salvar em PDF
+- **Gerar arquivo de remessa**
+- **Enviar os arquivos por e-mail** para o Sicredi para homologação
+- Após aprovação, prosseguir para a configuração da API
+
+---
+
+### **4 — Configurando a API**
+
+- **Solicitar chave MASTER** via Sicredi Internet Banking
+- Inserir a **chave MASTER** no Local de Cobrança
+- **Configuração 219:** Definir os responsáveis pelo financeiro (ex.: `[1, -1]`)
+- **Configuração 247:** Marcar como **SIM**
+- **Configuração 248:** Definir ações automáticas como `[A,B]` (Registro e Baixa)
+- **Agendar tarefa automática:**
+  - Tipo: **EXECUTAR AS ROTINAS DA API DOS BANCOS AUTOMATIZADOS**
+  - Frequência: diária, horário fixo
+
+---
+
+## **Demais Bancos – Configuração Simplificada**
+
+### **Sicoob**
+
+- Número da última remessa
+- Dias para protesto
+- Multa e juros após vencimento
+- Convênio e carteira
+- Versão do arquivo e layout
+
+### **Viacred**
+
+- Número da última remessa
+- Dias para protesto
+- Multa e juros após vencimento
+- Convênio e carteira
+
+### **Itaú**
+
+- Número da última remessa
+- Dias para protesto
+- Multa e juros após vencimento
+- Convênio e carteira
