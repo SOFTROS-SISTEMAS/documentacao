@@ -70,6 +70,14 @@
             "pages": [
               "web/relatorios/resumo-vendas"
             ]
+          },
+          {
+            "group": "Faturamento",
+            "pages": [
+              "web/Faturamento/baixar-xml-receita",
+              "web/Faturamento/condicional-em-aberto",
+              "web/Faturamento/nfe-e-nf-da-devolucao"
+            ]
           }
         ]
       },
