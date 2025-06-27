@@ -98,8 +98,8 @@
             "group": "Fornecedores",
             "pages": [
               "web/Fornecedores/cadastro-de-fornecedor",
-              "web/Fornecedores/import",
-              "web/Fornecedores/importar-pedidos-externos"
+              "web/Fornecedores/import"
+              
             ]
           },
           {
