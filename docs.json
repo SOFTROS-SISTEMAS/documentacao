@@ -23,6 +23,20 @@
             ]
           },
           {
+            "group": "Dashboard",
+            "pages": [
+              "web/Dashboard/Checklist-Vendedores",
+              "web/Dashboard/ClientesXColecoes",
+              "web/Dashboard/Resumo-da-colecao",
+              "web/Dashboard/Vendars-por-vendedor",
+              "web/Dashboard/curva-ABC",
+              "web/Dashboard/ponto-do-equilibrio",
+              "web/Dashboard/resumo-do-dia",
+              "web/Dashboard/vendas-com-poucos-itens",
+              "web/Dashboard/vendas-por0tabela-de-preco"
+            ]
+          },
+          {
             "group": "Produtos",
             "pages": [
               "web/produtos/cadastro-produtos",
@@ -30,8 +44,7 @@
               "web/produtos/cadastro-departamento",
               "web/produtos/cadastro-cores",
               "web/produtos/entrada-produtos",
-              "web/produtos/cadastro-grupos",
-              "web/Dashboard/Checklist-Vendedores"
+              "web/produtos/cadastro-grupos"
             ]
           },
           {
