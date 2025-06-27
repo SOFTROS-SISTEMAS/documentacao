@@ -44,7 +44,12 @@
               "web/produtos/cadastro-departamento",
               "web/produtos/cadastro-cores",
               "web/produtos/entrada-produtos",
-              "web/produtos/cadastro-grupos"
+              "web/produtos/cadastro-grupos",
+              "web/produtos/Balanco",
+              "web/produtos/alteracao-de-preco-multipla",
+              "web/produtos/alteracao-de-preco-por-quantidade",
+              "web/produtos/relatorio-de-estoque",
+              "web/produtos/relatorio-de-etiquetas"
             ]
           },
           {
@@ -68,7 +73,11 @@
               "web/financeiro/contas-pagar",
               "web/financeiro/contas-receber",
               "web/financeiro/caixa",
-              "web/financeiro/TEF"
+              "web/financeiro/TEF",
+              "web/financeiro/Cashback",
+              "web/financeiro/cobranca-por-whatsapp",
+              "web/financeiro/creditos-debitos",
+              "web/financeiro/homologacao-de-boletos"
             ]
           },
           {
@@ -110,6 +119,13 @@
             "group": "Diversos",
             "pages": [
               "web/diversos/tabela-impostos"
+            ]
+          },
+          {
+            "group": "Pessoal",
+            "pages": [
+              "web/pessoal/FollowUp",
+              "web/pessoal/Liberao"
             ]
           }
         ]
