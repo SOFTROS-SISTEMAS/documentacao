@@ -53,7 +53,13 @@
               "web/clientes/frente-caixa",
               "web/clientes/historico-cliente",
               "web/clientes/link-compartilhamento",
-              "web/clientes/vale-presente"
+              "web/clientes/vale-presente",
+              "web/clientes/checkout",
+              "web/clientes/desconto-sobre-venda",
+              "web/clientes/impresso-de-vendas",
+              "web/clientes/pedidos-de-saida",
+              "web/clientes/siada-de-produto-com-defeito",
+              "web/clientes/troca-de-mercadorias"
             ]
           },
           {
@@ -77,6 +83,33 @@
               "web/Faturamento/baixar-xml-receita",
               "web/Faturamento/condicional-em-aberto",
               "web/Faturamento/nfe-e-nf-da-devolucao"
+            ]
+          },
+          {
+            "group": "Fornecedores",
+            "pages": [
+              "web/Fornecedores/cadastro-de-fornecedor",
+              "web/Fornecedores/import",
+              "web/Fornecedores/importar-pedidos-externos"
+            ]
+          },
+          {
+            "group": "Funcionários",
+            "pages": [
+              "web/Funcionarios/cadastro-de-funcionario",
+              "web/Funcionarios/margem-para-arredondamento"
+            ]
+          },
+          {
+            "group": "Cortes",
+            "pages": [
+              "web/cortes/cortes"
+            ]
+          },
+          {
+            "group": "Diversos",
+            "pages": [
+              "web/diversos/tabela-impostos"
             ]
           }
         ]
