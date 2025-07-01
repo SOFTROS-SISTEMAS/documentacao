@@ -23,6 +23,12 @@
             ]
           },
           {
+            "group": "Atualizacoes",
+            "pages": [
+              "web/Atualizacoes/Contas-a-receber"
+            ]
+          },
+          {
             "group": "Dashboard",
             "pages": [
               "web/Dashboard/Checklist-Vendedores",
