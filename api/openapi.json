@@ -1,1952 +1,1511 @@
-{
-  "openapi": "3.1.0",
-  "info": {
-    "title": "Agulhão API",
-    "description": "API do sistema Agulhão",
-    "contact": {
-      "email": "contato@softros.com.br",
-      "url": "https://agulhao.com.br"
-    },
-    "version": "1.0.0"
-  },
-  "externalDocs": {
-    "description": "Mais sobre a API",
-    "url": "https://docs.agulhao.com.br/api"
-  },
-  "servers": [
-    {
-      "url": "https://api-integracoes.agulhao.com.br",
-      "description": "Produção"
-    }
-  ],
-  "tags": [
-    {
-      "name": "filiais"
-    },
-    {
-      "name": "pessoas"
-    },
-    {
-      "name": "produtos"
-    },
-    {
-      "name": "pedidos"
-    },
-    {
-      "name": "tipos-lancamento"
-    }
-  ],
-  "components": {
-    "securitySchemes": {
-      "chaveApi": {
-        "description": "Chave da API gerada no agulhão",
-        "type": "apiKey",
-        "name": "x-api-key",
-        "in": "header"
-      }
-    }
-  },
-  "paths": {
-    "/produtos/estoque": {
-      "get": {
-        "operationId": "getEstoqueProdutos",
-        "tags": [
-          "produtos"
-        ],
-        "security": [
-          {
-            "chaveApi": []
-          }
-        ],
-        "summary": "Retorna estoque de todos os produtos",
-        "description": "Retorna estoque de todos os produtos cadastrados no Agulhão",
-        "parameters": [
-          {
-            "name": "pagina",
-            "in": "query",
-            "description": "Número da página para paginação dos resultados",
-            "schema": {
-              "type": "integer",
-              "default": 1,
-              "example": 1
-            }
-          },
-          {
-            "name": "qtdePorPagina",
-            "in": "query",
-            "description": "Quantidade de produtos por página",
-            "schema": {
-              "type": "integer",
-              "default": 100,
-              "example": 10
-            }
-          },
-          {
-            "name": "ultimaAtualizacao",
-            "in": "query",
-            "description": "Data da última atualização dos produtos",
-            "schema": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2025-01-01T00:00:00"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "number",
-                        "description": "Identificador único do produto",
-                        "example": 1
-                      },
-                      "grades": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "number",
-                              "description": "Identificador único da grade do produto",
-                              "example": 1
-                            },
-                            "ean": {
-                              "type": "string",
-                              "description": "EAN (código de barras) da grade do produto",
-                              "example": "1234567890123"
-                            },
-                            "quantidade": {
-                              "type": "number",
-                              "format": "integer",
-                              "description": "Quantidade em estoque da grade do produto",
-                              "example": 100
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/produtos/estoque/{idProduto}": {
-      "get": {
-        "operationId": "getEstoqueProdutoEspecifico",
-        "tags": [
-          "produtos"
-        ],
-        "security": [
-          {
-            "chaveApi": []
-          }
-        ],
-        "summary": "Retorna estoque de um produto",
-        "description": "Retorna estoque de um produto específico",
-        "parameters": [
-          {
-            "name": "idProduto",
-            "in": "path",
-            "required": true,
-            "description": "Identificador único do produto",
-            "schema": {
-              "type": "integer",
-              "example": 1
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "gradeId": {
-                        "type": "number",
-                        "description": "Identificador único da grade do produto",
-                        "example": 1
-                      },
-                      "ean": {
-                        "type": "string",
-                        "description": "EAN (código de barras) da grade do produto",
-                        "example": "1234567890123"
-                      },
-                      "quantidade": {
-                        "type": "number",
-                        "format": "integer",
-                        "description": "Quantidade em estoque da grade do produto",
-                        "example": 100
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/produtos": {
-      "get": {
-        "operationId": "getProdutos",
-        "tags": [
-          "produtos"
-        ],
-        "security": [
-          {
-            "chaveApi": []
-          }
-        ],
-        "summary": "Retorna produtos",
-        "description": "Retorna lista de produtos cadastrados no Agulhão",
-        "parameters": [
-          {
-            "name": "pagina",
-            "in": "query",
-            "description": "Número da página para paginação dos resultados",
-            "schema": {
-              "type": "integer",
-              "default": 1,
-              "example": 1
-            }
-          },
-          {
-            "name": "qtdePorPagina",
-            "in": "query",
-            "description": "Quantidade de produtos por página",
-            "schema": {
-              "type": "integer",
-              "default": 100,
-              "example": 10
-            }
-          },
-          {
-            "name": "ultimaAtualizacao",
-            "in": "query",
-            "description": "Data da última atualização dos produtos (formato ISO 8601)",
-            "schema": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2025-01-01T00:00:00Z"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "number",
-                        "description": "Identificador único do produto",
-                        "example": 1
-                      },
-                      "nomePersonalizado": {
-                        "type": "string",
-                        "description": "Nome personalizado do produto",
-                        "example": "Produto Personalizado"
-                      },
-                      "descricao": {
-                        "type": "string",
-                        "description": "Descrição do produto",
-                        "example": "Descrição do produto"
-                      },
-                      "nomeAbreviado": {
-                        "type": "string",
-                        "description": "Nome abreviado do produto",
-                        "example": "Prod. Abreviado"
-                      },
-                      "referencia": {
-                        "type": "string",
-                        "description": "Referência do produto",
-                        "example": "REF123"
-                      },
-                      "nome": {
-                        "type": "string",
-                        "description": "Nome do produto",
-                        "example": "Nome do Produto"
-                      },
-                      "sexo": {
-                        "type": "string",
-                        "description": "Sexo do produto (M, F, U)",
-                        "example": "M"
-                      },
-                      "marca": {
-                        "type": "string",
-                        "description": "Marca do produto",
-                        "example": "Marca do Produto"
-                      },
-                      "altura": {
-                        "type": "number",
-                        "format": "float",
-                        "description": "Altura do produto em centímetros",
-                        "example": 10.5
-                      },
-                      "largura": {
-                        "type": "number",
-                        "format": "float",
-                        "description": "Largura do produto em centímetros",
-                        "example": 20
-                      },
-                      "comprimento": {
-                        "type": "number",
-                        "format": "float",
-                        "description": "Comprimento do produto em centímetros",
-                        "example": 30
-                      },
-                      "peso": {
-                        "type": "number",
-                        "format": "float",
-                        "description": "Peso do produto em kg",
-                        "example": 0.57
-                      },
-                      "unidadeMedidaSigla": {
-                        "type": "string",
-                        "description": "Sigla da unidade de medida do produto",
-                        "example": "UN"
-                      },
-                      "ativo": {
-                        "type": "boolean",
-                        "description": "Indica se o produto está ativo",
-                        "example": true
-                      },
-                      "precoMinimo": {
-                        "type": "number",
-                        "format": "float",
-                        "description": "Preço mínimo do produto",
-                        "example": 10
-                      },
-                      "precoMaximo": {
-                        "type": "number",
-                        "format": "float",
-                        "description": "Preço máximo do produto",
-                        "example": 100
-                      },
-                      "ultimaAlteracao": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Data da última atualização do produto",
-                        "example": "2025-01-01T00:00:00Z"
-                      },
-                      "cores": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "number",
-                              "description": "Identificador único da cor",
-                              "example": 1
-                            },
-                            "nome": {
-                              "type": "string",
-                              "description": "Nome da cor",
-                              "example": "Azul"
-                            },
-                            "hexadecimal": {
-                              "type": "string",
-                              "description": "Código hexadecimal da cor",
-                              "example": "#0000FF"
-                            },
-                            "url": {
-                              "type": "string",
-                              "description": "URL da imagem da cor",
-                              "example": "https://example.com/cor-azul.png"
-                            }
-                          }
-                        }
-                      },
-                      "marcadores": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "number",
-                              "description": "Identificador único do marcador",
-                              "example": 1
-                            },
-                            "nome": {
-                              "type": "string",
-                              "description": "Nome do marcador",
-                              "example": "Marcador 1"
-                            }
-                          }
-                        }
-                      },
-                      "imagens": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "number",
-                              "description": "Identificador único da imagem",
-                              "example": 1
-                            },
-                            "url": {
-                              "type": "string",
-                              "description": "URL da imagem do produto",
-                              "example": "https://example.com/imagem-produto.png"
-                            },
-                            "ordem": {
-                              "type": "number",
-                              "description": "Ordem de exibição da imagem",
-                              "example": 1
-                            },
-                            "idCor": {
-                              "type": "number",
-                              "description": "Identificador da cor associada à imagem (se aplicável)",
-                              "example": 1
-                            }
-                          }
-                        }
-                      },
-                      "grades": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "numero": {
-                              "type": "string",
-                              "description": "Número da grade do produto",
-                              "example": "M"
-                            },
-                            "id": {
-                              "type": "number",
-                              "description": "Identificador único da grade do produto",
-                              "example": 1
-                            },
-                            "ean": {
-                              "type": "string",
-                              "description": "EAN (código de barras) da grade do produto",
-                              "example": "1234567890123"
-                            },
-                            "idCor": {
-                              "type": "number",
-                              "description": "Identificador da cor associada à grade do produto (se aplicável)",
-                              "example": 1
-                            },
-                            "preco": {
-                              "type": "number",
-                              "format": "float",
-                              "description": "Preço da grade do produto",
-                              "example": 50
-                            },
-                            "precoPromocional": {
-                              "type": "number",
-                              "format": "float",
-                              "description": "Preço promocional da grade do produto (se aplicável)",
-                              "example": 45
-                            },
-                            "estoque": {
-                              "type": "number",
-                              "format": "integer",
-                              "description": "Quantidade em estoque da grade do produto",
-                              "example": 100
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/pedidos": {
-      "get": {
-        "operationId": "getPedidos",
-        "tags": [
-          "pedidos"
-        ],
-        "security": [
-          {
-            "chaveApi": []
-          }
-        ],
-        "summary": "Retorna pedido",
-        "description": "Retorna pedido específico",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "description": "Identificador único do pedido",
-            "schema": {
-              "type": "string",
-              "example": "1"
-            }
-          },
-          {
-            "name": "idExterno",
-            "in": "query",
-            "description": "Identificador único do pedido na integração (seu id)",
-            "schema": {
-              "type": "string",
-              "example": "4560a17a-ea59-4c4b-a2a4-78610dd04d4a"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "description": "Identificador único do pedido no Agulhão",
-                      "example": "1"
-                    },
-                    "idExterno": {
-                      "type": "string",
-                      "description": "Identificador único do pedido na integração (seu id)",
-                      "example": "4560a17a-ea59-4c4b-a2a4-78610dd04d4a"
-                    },
-                    "descontoDinheiro": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Desconto em dinheiro aplicado ao pedido",
-                      "example": 10
-                    },
-                    "valorFrete": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Valor do frete",
-                      "example": 15
-                    },
-                    "valorOutros": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Valor de outros custos adicionais do pedido",
-                      "example": 5
-                    },
-                    "valorBruto": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Valor bruto do pedido (sem descontos)",
-                      "example": 100
-                    },
-                    "valorLiquido": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Valor líquido do pedido (com descontos)",
-                      "example": 90
-                    },
-                    "observacoes": {
-                      "type": "string",
-                      "description": "Observações do pedido",
-                      "example": "Observações do pedido"
-                    },
-                    "status": {
-                      "type": "string",
-                      "description": "Status do pedido",
-                      "examples": [
-                        "pendente",
-                        "aguardandoDataEnvio",
-                        "aprovando",
-                        "produzindo",
-                        "separando",
-                        "faturando",
-                        "finalizado",
-                        "cancelado",
-                        "conferindo"
-                      ]
-                    },
-                    "cliente": {
-                      "type": "object",
-                      "properties": {
-                        "documento": {
-                          "type": "string",
-                          "description": "CNPJ ou CPF do cliente",
-                          "example": "00000000000000"
-                        },
-                        "nome": {
-                          "type": "string",
-                          "description": "Nome do cliente",
-                          "example": "Nome do Cliente"
-                        }
-                      }
-                    },
-                    "entrega": {
-                      "type": "object",
-                      "properties": {
-                        "logradouro": {
-                          "type": "string",
-                          "description": "Logradouro do endereço de entrega",
-                          "example": "Avenida Paulista"
-                        },
-                        "complemento": {
-                          "type": "string",
-                          "description": "Complemento do endereço de entrega",
-                          "example": "Apto 101"
-                        },
-                        "numero": {
-                          "type": "string",
-                          "description": "Número do endereço de entrega",
-                          "example": "1000"
-                        },
-                        "bairro": {
-                          "type": "string",
-                          "description": "Bairro do endereço de entrega",
-                          "example": "Bela Vista"
-                        },
-                        "cidade": {
-                          "type": "string",
-                          "description": "Nome da cidade do endereço de entrega",
-                          "example": "São Paulo"
-                        },
-                        "uf": {
-                          "type": "string",
-                          "description": "Sigla da unidade federativa do endereço de entrega",
-                          "example": "SP"
-                        },
-                        "ibgeCidade": {
-                          "type": "string",
-                          "description": "Código IBGE da cidade do endereço de entrega",
-                          "example": "3550308"
-                        }
-                      }
-                    },
-                    "danfeUrl": {
-                      "type": "string",
-                      "description": "URL do DANFE (Documento Auxiliar da Nota Fiscal Eletrônica)",
-                      "example": "https://api.agulhao.com.br/danfe/1234567890.pdf"
-                    },
-                    "xmlNfeUrl": {
-                      "type": "string",
-                      "description": "URL do XML da Nota Fiscal Eletrônica",
-                      "example": "https://api.agulhao.com.br/xml/1234567890.xml"
-                    },
-                    "previsaoEntrega": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Data prevista para entrega do pedido",
-                      "example": "2025-01-01T00:00:00"
-                    },
-                    "ultimaAtualizacao": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Data da última atualização do pedido",
-                      "example": "2025-01-01T00:00:00"
-                    },
-                    "fechamento": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "Data de fechamento do pedido",
-                      "example": "2025-01-02T00:00:00"
-                    },
-                    "pagamentos": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "descricao": {
-                            "type": "string",
-                            "description": "Descrição do pagamento",
-                            "example": "Dinheiro"
-                          },
-                          "valor": {
-                            "type": "number",
-                            "format": "float",
-                            "description": "Valor do pagamento",
-                            "example": 100
-                          }
-                        }
-                      }
-                    },
-                    "produtos": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "number",
-                            "description": "Identificador único do produto",
-                            "example": 1,
-                            "format": "integer"
-                          },
-                          "idGrade": {
-                            "type": "number",
-                            "description": "Identificador único da grade do produto",
-                            "example": 1,
-                            "format": "integer"
-                          },
-                          "quantidade": {
-                            "type": "number",
-                            "format": "integer",
-                            "description": "Quantidade do produto no pedido",
-                            "example": 1
-                          },
-                          "valorUnitario": {
-                            "type": "number",
-                            "format": "float",
-                            "description": "Valor unitário do produto no pedido",
-                            "example": 100
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Parâmetros inválidos ou faltando informações necessárias para recuperar o pedido.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "mensagem": {
-                      "type": "string",
-                      "example": "Parâmetros inválidos. Verifique os dados enviados."
-                    },
-                    "tecnico": {
-                      "type": "string",
-                      "example": "Erro ao validar os dados do pedido."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Pedido não encontrado",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "mensagem": {
-                      "type": "string",
-                      "example": "Pedido não encontrado."
-                    },
-                    "tecnico": {
-                      "type": "string",
-                      "example": "Erro ao buscar o pedido no banco de dados."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Erro interno do servidor ao tentar recuperar o pedido.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "mensagem": {
-                      "type": "string",
-                      "example": "Erro ao recuperar o pedido."
-                    },
-                    "tecnico": {
-                      "type": "string",
-                      "example": "Erro ao buscar o pedido no banco de dados."
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "operationId": "postPedidos",
-        "tags": [
-          "pedidos"
-        ],
-        "security": [
-          {
-            "chaveApi": []
-          }
-        ],
-        "summary": "Cria um novo pedido",
-        "description": "Cria um novo pedido no sistema Agulhão",
-        "requestBody": {
-          "required": true,
-          "description": "Dados do pedido a ser criado",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "number",
-                    "description": "ID do pedido no Agulhão (se não existir ou não for encontrado a partir do idExterno, será gerado um novo)"
-                  },
-                  "idExterno": {
-                    "type": "string",
-                    "description": "ID do pedido na integração (seu id)"
-                  },
-                  "descontoDinheiro": {
-                    "type": "number",
-                    "format": "float",
-                    "description": "Desconto em dinheiro aplicado ao pedido",
-                    "example": 10
-                  },
-                  "valorFrete": {
-                    "type": "number",
-                    "format": "float",
-                    "description": "Valor do frete",
-                    "example": 15
-                  },
-                  "observacoes": {
-                    "type": "string",
-                    "description": "Observações do pedido",
-                    "example": "Observações do pedido"
-                  },
-                  "valorOutros": {
-                    "type": "number",
-                    "format": "float",
-                    "description": "Valor de outros custos adicionais do pedido",
-                    "example": 5
-                  },
-                  "cancelado": {
-                    "type": "boolean",
-                    "description": "Indica se o pedido foi cancelado",
-                    "example": false
-                  },
-                  "tipoPedido": {
-                    "type": "string",
-                    "description": "Tipo do pedido"
-                  },
-                  "filialCod": {
-                    "type": "string",
-                    "description": "Código da filial onde o pedido foi realizado"
-                  },
-                  "tipoFrete": {
-                    "type": "string",
-                    "description": "Tipo de frete do pedido"
-                  },
-                  "dataEmissao": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Data de emissão do pedido",
-                    "example": "2025-01-01T00:00:00"
-                  },
-                  "dataFechamento": {
-                    "type": "string",
-                    "format": "date-time",
-                    "description": "Data de fechamento do pedido",
-                    "example": "2025-01-02T00:00:00"
-                  },
-                  "guiaCod": {
-                    "type": "number",
-                    "description": "Código do guia associado ao pedido",
-                    "example": 1
-                  },
-                  "vendedorCod": {
-                    "type": "number",
-                    "description": "Código do vendedor associado ao pedido",
-                    "example": 1
-                  },
-                  "transportadoraCod": {
-                    "type": "number",
-                    "description": "Código da transportadora associada ao pedido",
-                    "example": 1
-                  },
-                  "gerenteProjetoCod": {
-                    "type": "number",
-                    "description": "Código do gerente de projeto associado ao pedido",
-                    "example": 1
-                  },
-                  "responsavelCod": {
-                    "type": "number",
-                    "description": "Código do responsável pelo pedido",
-                    "example": 1
-                  },
-                  "tipoLancamentoCod": {
-                    "type": "number",
-                    "description": "Código do tipo de lançamento do pedido",
-                    "example": 1
-                  },
-                  "cliente": {
-                    "type": "object",
-                    "properties": {
-                      "pessoaCod": {
-                        "type": "number",
-                        "description": "Código da pessoa/cliente (se ja existir no agulhao)",
-                        "example": 1
-                      },
-                      "documento": {
-                        "type": "string",
-                        "description": "CNPJ ou CPF do cliente",
-                        "example": "00000000000000"
-                      },
-                      "telefone": {
-                        "type": "string",
-                        "description": "Telefone do cliente",
-                        "example": "1112345678"
-                      },
-                      "email": {
-                        "type": "string",
-                        "description": "E-mail do cliente",
-                        "example": "contato@cliente.com"
-                      },
-                      "nome": {
-                        "type": "string",
-                        "description": "Nome do cliente",
-                        "example": "Nome do Cliente"
-                      },
-                      "logradouro": {
-                        "type": "string",
-                        "description": "Logradouro do endereço do cliente",
-                        "example": "Avenida Paulista"
-                      },
-                      "complemento": {
-                        "type": "string",
-                        "description": "Complemento do endereço do cliente",
-                        "example": "Apto 101"
-                      },
-                      "numero": {
-                        "type": "string",
-                        "description": "Número do endereço do cliente",
-                        "example": "1000"
-                      },
-                      "bairro": {
-                        "type": "string",
-                        "description": "Bairro do endereço do cliente",
-                        "example": "Bela Vista"
-                      },
-                      "cidade": {
-                        "type": "string",
-                        "description": "Nome da cidade do endereço do cliente",
-                        "example": "São Paulo"
-                      },
-                      "uf": {
-                        "type": "string",
-                        "description": "Sigla da unidade federativa do endereço do cliente",
-                        "example": "SP"
-                      },
-                      "ibgeCidade": {
-                        "type": "string",
-                        "description": "Código IBGE da cidade do endereço do cliente",
-                        "example": "3550308"
-                      }
-                    }
-                  },
-                  "entrega": {
-                    "type": "object",
-                    "properties": {
-                      "logradouro": {
-                        "type": "string",
-                        "description": "Logradouro do endereço de entrega",
-                        "example": "Avenida Paulista"
-                      },
-                      "complemento": {
-                        "type": "string",
-                        "description": "Complemento do endereço de entrega",
-                        "example": "Apto 101"
-                      },
-                      "numero": {
-                        "type": "string",
-                        "description": "Número do endereço de entrega",
-                        "example": "1000"
-                      },
-                      "bairro": {
-                        "type": "string",
-                        "description": "Bairro do endereço de entrega",
-                        "example": "Bela Vista"
-                      },
-                      "cidade": {
-                        "type": "string",
-                        "description": "Nome da cidade do endereço de entrega",
-                        "example": "São Paulo"
-                      },
-                      "uf": {
-                        "type": "string",
-                        "description": "Sigla da unidade federativa do endereço de entrega",
-                        "example": "SP"
-                      },
-                      "ibgeCidade": {
-                        "type": "string",
-                        "description": "Código IBGE da cidade do endereço de entrega",
-                        "example": "3550308"
-                      }
-                    }
-                  },
-                  "produtos": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "required": [
-                        "id",
-                        "idGrade",
-                        "quantidade",
-                        "valorUnitario"
-                      ],
-                      "properties": {
-                        "id": {
-                          "type": "string",
-                          "description": "Identificador único do produto",
-                          "example": "1"
-                        },
-                        "idGrade": {
-                          "type": "string",
-                          "description": "Identificador único da grade do produto",
-                          "example": "1"
-                        },
-                        "quantidade": {
-                          "type": "number",
-                          "format": "integer",
-                          "description": "Quantidade do produto no pedido",
-                          "example": 1
-                        },
-                        "valorUnitario": {
-                          "type": "number",
-                          "format": "float",
-                          "description": "Valor unitário do produto no pedido",
-                          "example": 100
-                        }
-                      }
-                    }
-                  },
-                  "pagamentos": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "required": [
-                        "tipoLancamentoCod",
-                        "valor",
-                        "dataVencimento"
-                      ],
-                      "properties": {
-                        "valor": {
-                          "type": "number",
-                          "format": "float",
-                          "description": "Valor do pagamento",
-                          "example": 100
-                        },
-                        "pago": {
-                          "type": "boolean",
-                          "description": "Indica se o pagamento foi realizado",
-                          "example": false
-                        },
-                        "gateway": {
-                          "type": "string",
-                          "description": "Gateway de pagamento utilizado",
-                          "example": "MERCADO PAGO"
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "examples": {
-                "contrato": {
-                  "summary": "Contrato",
-                  "description": "Contratos no Agulhão são tratados como pedidos e identificados pelo tipo de lançamento",
-                  "value": {
-                    "filialCod": 1,
-                    "tipoLancamentoCod": 5,
-                    "vendedorCod": 3530,
-                    "responsavelCod": 221,
-                    "gerenteProjetoCod": 221,
-                    "dataEmissao": "2025-06-25",
-                    "dataFechamento": "2025-06-25",
-                    "observacoes": "Contrato de teste",
-                    "cliente": {
-                      "pessoaCod": 3521
-                    },
-                    "produtos": [
-                      {
-                        "id": "1",
-                        "idGrade": "1",
-                        "quantidade": 1,
-                        "valorUnitario": 100
-                      }
-                    ]
-                  }
-                },
-                "comCadastroDeCliente": {
-                  "summary": "Com cadastro de cliente",
-                  "description": "Exemplo de pedido com cadastro de cliente (se o cliente não existir, será criado um novo cadastro no sistema)",
-                  "value": {
-                    "idExterno": "4560a17a-ea59-4c4b-a2a4-78610dd04d4a",
-                    "descontoDinheiro": 0,
-                    "valorFrete": 15,
-                    "observacoes": "Pedido de teste com cadastro de cliente",
-                    "valorOutros": 0,
-                    "cancelado": false,
-                    "cliente": {
-                      "documento": "00000000000000",
-                      "nome": "Nome do Cliente",
-                      "telefone": "1112345678",
-                      "email": "contato@cliente.com",
-                      "logradouro": "Avenida Paulista",
-                      "complemento": "Apto 101",
-                      "numero": "1000",
-                      "cep": "01000000",
-                      "bairro": "Bela Vista"
-                    },
-                    "produtos": [
-                      {
-                        "id": 5598,
-                        "idGrade": 1,
-                        "quantidade": 1,
-                        "valorUnitario": 79.9
-                      }
-                    ],
-                    "pagamentos": [
-                      {
-                        "valor": 79.9,
-                        "pago": true,
-                        "gateway": "PAGSEGURO"
-                      }
-                    ]
-                  }
-                },
-                "comPagamento": {
-                  "summary": "Básico com pagamento",
-                  "description": "Exemplo de pedido com pagamento (Se pago for \"false\" é considerado como um pré pagamento)",
-                  "value": {
-                    "observacoes": "Pedido de teste com pagamento",
-                    "cliente": {
-                      "pessoaCod": 1
-                    },
-                    "produtos": [
-                      {
-                        "id": "1",
-                        "idGrade": "1",
-                        "quantidade": 2,
-                        "valorUnitario": 50
-                      }
-                    ],
-                    "pagamentos": [
-                      {
-                        "valor": 100,
-                        "pago": true,
-                        "gateway": "MERCADO PAGO"
-                      }
-                    ]
-                  }
-                },
-                "semPagamento": {
-                  "summary": "Básico sem pagamento",
-                  "value": {
-                    "observacoes": "Pedido de teste sem pagamento",
-                    "cliente": {
-                      "pessoaCod": 1
-                    },
-                    "produtos": [
-                      {
-                        "id": "1",
-                        "idGrade": "1",
-                        "quantidade": 2,
-                        "valorUnitario": 50
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Pedido criado com sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "idAgulhao": {
-                      "type": "string",
-                      "description": "Identificador único do pedido criado no Agulhão",
-                      "example": "1"
-                    },
-                    "idExterno": {
-                      "type": "string",
-                      "description": "Identificador único do pedido na integração (seu id)",
-                      "example": "4560a17a-ea59-4c4b-a2a4-78610dd04d4a"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Parâmetros inválidos ou faltando informações necessárias para criar o pedido.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "mensagem": {
-                      "type": "string",
-                      "example": "Parâmetros inválidos. Verifique os dados enviados."
-                    },
-                    "tecnico": {
-                      "type": "string",
-                      "example": "Erro ao validar os dados do pedido."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Erro interno do servidor ao tentar criar o pedido.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "mensagem": {
-                      "type": "string",
-                      "example": "Erro ao criar o pedido."
-                    },
-                    "tecnico": {
-                      "type": "string",
-                      "example": "Erro ao salvar o pedido no banco de dados."
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
-      "patch": {
-        "operationId": "patchPedidos",
-        "tags": [
-          "pedidos"
-        ],
-        "security": [
-          {
-            "chaveApi": []
-          }
-        ],
-        "summary": "Atualiza um pedido existente",
-        "description": "Atualiza parcialmente um pedido existente no sistema Agulhão. (Obs: É obrigatório informar id ou idExterno. Se ambos forem fornecidos, o id terá prioridade.)",
-        "requestBody": {
-          "required": true,
-          "description": "Dados do pedido a ser atualizado",
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "idExterno": {
-                    "type": "string",
-                    "description": "ID do pedido na integração (seu id)"
-                  },
-                  "cancelado": {
-                    "type": "boolean",
-                    "description": "Indica se o pedido foi cancelado",
-                    "example": false
-                  },
-                  "observacoes": {
-                    "type": "string",
-                    "description": "Observações do pedido",
-                    "example": "Observações atualizadas do pedido"
-                  }
-                }
-              },
-              "examples": {
-                "cancelando": {
-                  "summary": "Cancelando pedido",
-                  "description": "Exemplo de atualização de pedido para cancelamento",
-                  "value": {
-                    "idExterno": "4560a17a-ea59-4c4b-a2a4-78610dd04d4a",
-                    "cancelado": true
-                  }
-                },
-                "confirmandoPagamento": {
-                  "summary": "Confirmando pagamento",
-                  "description": "Exemplo de atualização de pedido para confirmar pagamento",
-                  "value": {
-                    "idExterno": "4560a17a-ea59-4c4b-a2a4-78610dd04d4a",
-                    "pagamentos": [
-                      {
-                        "valor": 79.9,
-                        "pago": true,
-                        "gateway": "PAGSEGURO"
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Pedido atualizado com sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "idAgulhao": {
-                      "type": "string",
-                      "description": "Identificador único do pedido criado no Agulhão",
-                      "example": "1"
-                    },
-                    "idExterno": {
-                      "type": "string",
-                      "description": "Identificador único do pedido na integração (seu id)",
-                      "example": "4560a17a-ea59-4c4b-a2a4-78610dd04d4a"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Parâmetros inválidos ou faltando informações necessárias para atualizar o pedido.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "mensagem": {
-                      "type": "string",
-                      "example": "Parâmetros inválidos. Verifique os dados enviados."
-                    },
-                    "tecnico": {
-                      "type": "string",
-                      "example": "Erro ao validar os dados do pedido."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Erro interno do servidor ao tentar atualizar o pedido.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "mensagem": {
-                      "type": "string",
-                      "example": "Erro ao atualizar o pedido."
-                    },
-                    "tecnico": {
-                      "type": "string",
-                      "example": "Erro ao salvar o pedido no banco de dados."
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/pessoas/financeiro": {
-      "get": {
-        "operationId": "getPessoasFinanceiro",
-        "tags": [
-          "pessoas"
-        ],
-        "security": [
-          {
-            "chaveApi": []
-          }
-        ],
-        "summary": "Retorna cliente com o seu financeiro",
-        "description": "Retorna cliente específico com o seu financeiro (duplicatas em aberto)",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "query",
-            "description": "Identificador único do usuário",
-            "schema": {
-              "type": "string",
-              "example": "1"
-            }
-          },
-          {
-            "name": "duplicataId",
-            "in": "query",
-            "description": "Identificador único da duplicata",
-            "schema": {
-              "type": "string",
-              "example": "1"
-            }
-          },
-          {
-            "name": "pedidoId",
-            "in": "query",
-            "description": "Identificador único do pedido",
-            "schema": {
-              "type": "string",
-              "example": "1"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Identificador único do usuário",
-                        "example": "1"
-                      },
-                      "razaoSocial": {
-                        "type": "string",
-                        "description": "Razão social do usuário",
-                        "example": "RAZÃO SOCIAL DA EMPRESA"
-                      },
-                      "documento": {
-                        "type": "string",
-                        "description": "CNPJ ou CPF do usuário",
-                        "example": "00000000000000"
-                      },
-                      "fantasia": {
-                        "type": "string",
-                        "description": "Nome fantasia do usuário",
-                        "example": "FANTASIA DA EMPRESA"
-                      },
-                      "email": {
-                        "type": "string",
-                        "description": "E-mail do usuário",
-                        "example": "contato@empresa.com"
-                      },
-                      "telefone": {
-                        "type": "string",
-                        "description": "Telefone do usuário",
-                        "example": "1112345678"
-                      },
-                      "celular": {
-                        "type": "string",
-                        "description": "Celular do usuário",
-                        "example": "11912345678"
-                      },
-                      "ultimaAtualizacao": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Data da última atualização do usuário",
-                        "example": "2025-01-01T00:00:00"
-                      },
-                      "endereco": {
-                        "type": "object",
-                        "properties": {
-                          "cidadeId": {
-                            "type": "string",
-                            "description": "Identificador da cidade do endereço (Código IBGE)",
-                            "example": "1"
-                          },
-                          "cidadeNome": {
-                            "type": "string",
-                            "description": "Nome da cidade do endereço",
-                            "example": "São Paulo"
-                          },
-                          "uf": {
-                            "type": "string",
-                            "description": "Sigla da unidade federativa do endereço",
-                            "example": "SP"
-                          },
-                          "cep": {
-                            "type": "string",
-                            "description": "CEP do endereço",
-                            "example": "01000000"
-                          },
-                          "logradouro": {
-                            "type": "string",
-                            "description": "Logradouro do endereço",
-                            "example": "Avenida Paulista"
-                          },
-                          "numero": {
-                            "type": "string",
-                            "description": "Número do endereço",
-                            "example": "1000"
-                          },
-                          "complemento": {
-                            "type": "string",
-                            "description": "Complemento do endereço",
-                            "example": "Apto 101"
-                          },
-                          "bairro": {
-                            "type": "string",
-                            "description": "Bairro do endereço",
-                            "example": "Bela Vista"
-                          }
-                        }
-                      },
-                      "duplicatas": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "string",
-                              "description": "Identificador único da duplicata",
-                              "example": "1"
-                            },
-                            "filialId": {
-                              "type": "string",
-                              "description": "Identificador da filial da duplicata",
-                              "example": "1"
-                            },
-                            "filialNome": {
-                              "type": "string",
-                              "description": "Nome da filial da duplicata",
-                              "example": "Filial 1"
-                            },
-                            "emissao": {
-                              "type": "string",
-                              "format": "date-time",
-                              "description": "Data de emissão da duplicata",
-                              "example": "2025-01-01T00:00:00"
-                            },
-                            "vencimento": {
-                              "type": "string",
-                              "format": "date-time",
-                              "description": "Data de vencimento da duplicata",
-                              "example": "2025-02-01T00:00:00"
-                            },
-                            "numero": {
-                              "type": "string",
-                              "description": "Número da duplicata",
-                              "example": "123456"
-                            },
-                            "localCobrancaId": {
-                              "type": "string",
-                              "description": "Identificador do local de cobrança da duplicata",
-                              "example": "1"
-                            },
-                            "valor": {
-                              "type": "number",
-                              "format": "float",
-                              "description": "Valor da duplicata",
-                              "example": 1000
-                            },
-                            "saldo": {
-                              "type": "number",
-                              "format": "float",
-                              "description": "Saldo da duplicata",
-                              "example": 500
-                            },
-                            "diasAtrasado": {
-                              "type": "integer",
-                              "description": "Dias de atraso da duplicata",
-                              "example": 10
-                            },
-                            "diasVencer": {
-                              "type": "integer",
-                              "description": "Dias para vencer da duplicata",
-                              "example": 5
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Parâmetros inválidos",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "mensagem": {
-                      "type": "string",
-                      "example": "Parâmetros inválidos. Informe o id da pessoa, duplicataId ou pedidoId."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Usuário não encontrado",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "mensagem": {
-                      "type": "string",
-                      "example": "Pessoa não encontrada."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Erro interno do servidor",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "mensagem": {
-                      "type": "string",
-                      "example": "Erro ao buscar financeiro da pessoa."
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/pessoas": {
-      "get": {
-        "operationId": "getPessoas",
-        "tags": [
-          "pessoas"
-        ],
-        "security": [
-          {
-            "chaveApi": []
-          }
-        ],
-        "summary": "Retorna usuários cadastradas no sistema",
-        "description": "Retorna lista de usuários cadastradas no sistema",
-        "parameters": [
-          {
-            "name": "pagina",
-            "in": "query",
-            "description": "Página atual da busca",
-            "schema": {
-              "type": "string",
-              "default": "1"
-            }
-          },
-          {
-            "name": "qtdePorPagina",
-            "in": "query",
-            "description": "Quantidade de usuários por página",
-            "schema": {
-              "type": "string",
-              "default": "100"
-            }
-          },
-          {
-            "name": "ultimaAtualizacao",
-            "in": "query",
-            "description": "Retorna apenas usuários que foram atualizados após a data informada",
-            "schema": {
-              "type": "string",
-              "format": "date-time",
-              "example": "2025-01-01T00:00:00"
-            }
-          },
-          {
-            "name": "vendedor",
-            "in": "query",
-            "description": "Retorna apenas usuários que são vendedores",
-            "schema": {
-              "type": "string",
-              "default": "0",
-              "enum": [
-                "1",
-                "0"
-              ]
-            }
-          },
-          {
-            "name": "cliente",
-            "in": "query",
-            "description": "Retorna apenas usuários que são clientes",
-            "schema": {
-              "type": "string",
-              "default": "0",
-              "enum": [
-                "1",
-                "0"
-              ]
-            }
-          },
-          {
-            "name": "guia",
-            "in": "query",
-            "description": "Retorna apenas usuários que são guias",
-            "schema": {
-              "type": "string",
-              "default": "0",
-              "enum": [
-                "1",
-                "0"
-              ]
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Sucesso",
-            "headers": {
-              "x-tem-proxima-pagina": {
-                "description": "Indica se há uma próxima página de resultados",
-                "schema": {
-                  "type": "string",
-                  "example": [
-                    "true",
-                    "false"
-                  ]
-                }
-              },
-              "x-pagina": {
-                "description": "Página atual da busca",
-                "schema": {
-                  "type": "string",
-                  "example": "1"
-                }
-              },
-              "x-qtde-por-pagina": {
-                "description": "Quantidade de usuários por página",
-                "schema": {
-                  "type": "string",
-                  "example": "100"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Identificador único do usuário",
-                        "example": "1"
-                      },
-                      "razaoSocial": {
-                        "type": "string",
-                        "description": "Razão social do usuário",
-                        "example": "RAZÃO SOCIAL DA EMPRESA"
-                      },
-                      "documento": {
-                        "type": "string",
-                        "description": "CNPJ ou CPF do usuário",
-                        "example": "00000000000000"
-                      },
-                      "fantasia": {
-                        "type": "string",
-                        "description": "Nome fantasia do usuário",
-                        "example": "FANTASIA DA EMPRESA"
-                      },
-                      "email": {
-                        "type": "string",
-                        "description": "E-mail do usuário",
-                        "example": "contato@empresa.com"
-                      },
-                      "telefone": {
-                        "type": "string",
-                        "description": "Telefone do usuário",
-                        "example": "1112345678"
-                      },
-                      "celular": {
-                        "type": "string",
-                        "description": "Celular do usuário",
-                        "example": "11912345678"
-                      },
-                      "guia": {
-                        "type": "boolean",
-                        "description": "Indica se o usuário é um guia",
-                        "example": true
-                      },
-                      "vendedor": {
-                        "type": "boolean",
-                        "description": "Indica se o usuário é um vendedor",
-                        "example": false
-                      },
-                      "cliente": {
-                        "type": "boolean",
-                        "description": "Indica se o usuário é um cliente",
-                        "example": true
-                      },
-                      "ultimaAtualizacao": {
-                        "type": "string",
-                        "format": "date-time",
-                        "description": "Data da última atualização do usuário",
-                        "example": "2025-01-01T00:00:00"
-                      },
-                      "endereco": {
-                        "type": "object",
-                        "properties": {
-                          "cidadeId": {
-                            "type": "string",
-                            "description": "Identificador da cidade do endereço (Código IBGE)",
-                            "example": "1"
-                          },
-                          "cidadeNome": {
-                            "type": "string",
-                            "description": "Nome da cidade do endereço",
-                            "example": "São Paulo"
-                          },
-                          "uf": {
-                            "type": "string",
-                            "description": "Sigla da unidade federativa do endereço",
-                            "example": "SP"
-                          },
-                          "cep": {
-                            "type": "string",
-                            "description": "CEP do endereço",
-                            "example": "01000000"
-                          },
-                          "logradouro": {
-                            "type": "string",
-                            "description": "Logradouro do endereço",
-                            "example": "Avenida Paulista"
-                          },
-                          "numero": {
-                            "type": "string",
-                            "description": "Número do endereço",
-                            "example": "1000"
-                          },
-                          "complemento": {
-                            "type": "string",
-                            "description": "Complemento do endereço",
-                            "example": "Apto 101"
-                          },
-                          "bairro": {
-                            "type": "string",
-                            "description": "Bairro do endereço",
-                            "example": "Bela Vista"
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/tipos-lancamento": {
-      "get": {
-        "operationId": "getTiposLancamento",
-        "tags": [
-          "tipos-lancamento"
-        ],
-        "security": [
-          {
-            "chaveApi": []
-          }
-        ],
-        "summary": "Busca tipos de lançamento disponíveis",
-        "description": "Retorna lista com os tipos de lançamento",
-        "responses": {
-          "200": {
-            "description": "Sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Identificador do tipo de lançamento",
-                        "example": "1"
-                      },
-                      "descricao": {
-                        "type": "string",
-                        "description": "Descrição do tipo de lançamento",
-                        "example": "VENDA"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/filiais": {
-      "get": {
-        "tags": [
-          "filiais"
-        ],
-        "security": [
-          {
-            "chaveApi": []
-          }
-        ],
-        "summary": "Busca filiais disponíveis",
-        "description": "Retorna as filiais que a integração tem permissão de acessar",
-        "operationId": "getFiliais",
-        "responses": {
-          "200": {
-            "description": "Sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Identificador único da filial",
-                        "example": "1"
-                      },
-                      "razaoSocial": {
-                        "type": "string",
-                        "description": "Razão social completa da filial",
-                        "example": "RAZÃO SOCIAL DA EMPRESA"
-                      },
-                      "cnpj": {
-                        "type": "string",
-                        "description": "CNPJ da filial",
-                        "example": "00000000000000"
-                      },
-                      "fantasia": {
-                        "type": "string",
-                        "description": "Nome fantasia da filial",
-                        "example": "FANTASIA"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
+openapi: 3.1.0
+info:
+    title: Agulhão API
+    description: API do sistema Agulhão
+    contact:
+        email: contato@softros.com.br
+        url: https://agulhao.com.br
+    version: 1.0.1
+externalDocs:
+    description: Mais sobre a API
+    url: https://docs.agulhao.com.br/api
+servers:
+    - url: https://api-integracoes.agulhao.com.br
+      description: Produção
+tags:
+    - name: filiais
+    - name: pessoas
+    - name: produtos
+    - name: pedidos
+    - name: tipos-lancamento
+components:
+    securitySchemes:
+        chaveApi:
+            description: Chave da API gerada no agulhão
+            type: apiKey
+            name: x-api-key
+            in: header
+paths:
+    /produtos/estoque:
+        get:
+            operationId: getEstoqueProdutos
+            tags:
+                - produtos
+            security:
+                - chaveApi: []
+            summary: Retorna estoque de todos os produtos
+            description: Retorna estoque de todos os produtos cadastrados no Agulhão
+            parameters:
+                - name: pagina
+                  in: query
+                  description: Número da página para paginação dos resultados
+                  schema:
+                      type: integer
+                      default: 1
+                      example: 1
+                - name: qtdePorPagina
+                  in: query
+                  description: Quantidade de produtos por página
+                  schema:
+                      type: integer
+                      default: 100
+                      example: 10
+                - name: ultimaAtualizacao
+                  in: query
+                  description: Data da última atualização dos produtos
+                  schema:
+                      type: string
+                      format: date-time
+                      example: '2025-01-01T00:00:00'
+            responses:
+                '200':
+                    description: Sucesso
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        id:
+                                            type: number
+                                            description: Identificador único do produto
+                                            example: 1
+                                        grades:
+                                            type: array
+                                            items:
+                                                type: object
+                                                properties:
+                                                    id:
+                                                        type: number
+                                                        description: Identificador único da grade do produto
+                                                        example: 1
+                                                    ean:
+                                                        type: string
+                                                        description: EAN (código de barras) da grade do produto
+                                                        example: '1234567890123'
+                                                    quantidade:
+                                                        type: number
+                                                        format: integer
+                                                        description: Quantidade em estoque da grade do produto
+                                                        example: 100
+    /produtos/estoque/{idProduto}:
+        get:
+            operationId: getEstoqueProdutoEspecifico
+            tags:
+                - produtos
+            security:
+                - chaveApi: []
+            summary: Retorna estoque de um produto
+            description: Retorna estoque de um produto específico
+            parameters:
+                - name: idProduto
+                  in: path
+                  required: true
+                  description: Identificador único do produto
+                  schema:
+                      type: integer
+                      example: 1
+            responses:
+                '200':
+                    description: Sucesso
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        gradeId:
+                                            type: number
+                                            description: Identificador único da grade do produto
+                                            example: 1
+                                        ean:
+                                            type: string
+                                            description: EAN (código de barras) da grade do produto
+                                            example: '1234567890123'
+                                        quantidade:
+                                            type: number
+                                            format: integer
+                                            description: Quantidade em estoque da grade do produto
+                                            example: 100
+    /produtos:
+        get:
+            operationId: getProdutos
+            tags:
+                - produtos
+            security:
+                - chaveApi: []
+            summary: Retorna produtos
+            description: Retorna lista de produtos cadastrados no Agulhão
+            parameters:
+                - name: pagina
+                  in: query
+                  description: Número da página para paginação dos resultados
+                  schema:
+                      type: integer
+                      default: 1
+                      example: 1
+                - name: qtdePorPagina
+                  in: query
+                  description: Quantidade de produtos por página
+                  schema:
+                      type: integer
+                      default: 100
+                      example: 10
+                - name: ultimaAtualizacao
+                  in: query
+                  description: Data da última atualização dos produtos (formato ISO 8601)
+                  schema:
+                      type: string
+                      format: date-time
+                      example: '2025-01-01T00:00:00Z'
+            responses:
+                '200':
+                    description: Sucesso
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        id:
+                                            type: number
+                                            description: Identificador único do produto
+                                            example: 1
+                                        nomePersonalizado:
+                                            type: string
+                                            description: Nome personalizado do produto
+                                            example: 'Produto Personalizado'
+                                        descricao:
+                                            type: string
+                                            description: Descrição do produto
+                                            example: 'Descrição do produto'
+                                        nomeAbreviado:
+                                            type: string
+                                            description: Nome abreviado do produto
+                                            example: 'Prod. Abreviado'
+                                        referencia:
+                                            type: string
+                                            description: Referência do produto
+                                            example: 'REF123'
+                                        nome:
+                                            type: string
+                                            description: Nome do produto
+                                            example: 'Nome do Produto'
+                                        sexo:
+                                            type: string
+                                            description: Sexo do produto (M, F, U)
+                                            example: 'M'
+                                        marca:
+                                            type: string
+                                            description: Marca do produto
+                                            example: 'Marca do Produto'
+                                        altura:
+                                            type: number
+                                            format: float
+                                            description: Altura do produto em centímetros
+                                            example: 10.5
+                                        largura:
+                                            type: number
+                                            format: float
+                                            description: Largura do produto em centímetros
+                                            example: 20.0
+                                        comprimento:
+                                            type: number
+                                            format: float
+                                            description: Comprimento do produto em centímetros
+                                            example: 30.0
+                                        peso:
+                                            type: number
+                                            format: float
+                                            description: Peso do produto em kg
+                                            example: 0.57
+                                        unidadeMedidaSigla:
+                                            type: string
+                                            description: Sigla da unidade de medida do produto
+                                            example: 'UN'
+                                        ativo:
+                                            type: boolean
+                                            description: Indica se o produto está ativo
+                                            example: true
+                                        precoMinimo:
+                                            type: number
+                                            format: float
+                                            description: Preço mínimo do produto
+                                            example: 10.00
+                                        precoMaximo:
+                                            type: number
+                                            format: float
+                                            description: Preço máximo do produto
+                                            example: 100.00
+                                        ultimaAlteracao:
+                                            type: string
+                                            format: date-time
+                                            description: Data da última atualização do produto
+                                            example: '2025-01-01T00:00:00Z'
+                                        cores:
+                                            type: array
+                                            items:
+                                                type: object
+                                                properties:
+                                                    id:
+                                                        type: number
+                                                        description: Identificador único da cor
+                                                        example: 1
+                                                    nome:
+                                                        type: string
+                                                        description: Nome da cor
+                                                        example: 'Azul'
+                                                    hexadecimal:
+                                                        type: string
+                                                        description: Código hexadecimal da cor
+                                                        example: '#0000FF'
+                                                    url:
+                                                        type: string
+                                                        description: URL da imagem da cor
+                                                        example: 'https://example.com/cor-azul.png'
+                                        marcadores:
+                                            type: array
+                                            items:
+                                                type: object
+                                                properties:
+                                                    id:
+                                                        type: number
+                                                        description: Identificador único do marcador
+                                                        example: 1
+                                                    nome:
+                                                        type: string
+                                                        description: Nome do marcador
+                                                        example: 'Marcador 1'
+                                        imagens:
+                                            type: array
+                                            items:
+                                                type: object
+                                                properties:
+                                                    id:
+                                                        type: number
+                                                        description: Identificador único da imagem
+                                                        example: 1
+                                                    url:
+                                                        type: string
+                                                        description: URL da imagem do produto
+                                                        example: 'https://example.com/imagem-produto.png'
+                                                    ordem:
+                                                        type: number
+                                                        description: Ordem de exibição da imagem
+                                                        example: 1
+                                                    idCor:
+                                                        type: number
+                                                        description: Identificador da cor associada à imagem (se aplicável)
+                                                        example: 1
+                                        grades:
+                                            type: array
+                                            items:
+                                                type: object
+                                                properties:
+                                                    numero:
+                                                        type: string
+                                                        description: Número da grade do produto
+                                                        example: 'M'
+                                                    id:
+                                                        type: number
+                                                        description: Identificador único da grade do produto
+                                                        example: 1
+                                                    ean:
+                                                        type: string
+                                                        description: EAN (código de barras) da grade do produto
+                                                        example: '1234567890123'
+                                                    idCor:
+                                                        type: number
+                                                        description: Identificador da cor associada à grade do produto (se aplicável)
+                                                        example: 1
+                                                    preco:
+                                                        type: number
+                                                        format: float
+                                                        description: Preço da grade do produto
+                                                        example: 50.00
+                                                    precoPromocional:
+                                                        type: number
+                                                        format: float
+                                                        description: Preço promocional da grade do produto (se aplicável)
+                                                        example: 45.00
+                                                    estoque:
+                                                        type: number
+                                                        format: integer
+                                                        description: Quantidade em estoque da grade do produto
+                                                        example: 100
+    /pedidos:
+        get:
+            operationId: getPedidos
+            tags:
+                - pedidos
+            security:
+                - chaveApi: []
+            summary: Retorna pedido
+            description: Retorna pedido específico
+            parameters:
+                - name: id
+                  in: query
+                  description: Identificador único do pedido
+                  schema:
+                      type: string
+                      example: '1'
+                - name: idExterno
+                  in: query
+                  description: Identificador único do pedido na integração (seu id)
+                  schema:
+                      type: string
+                      example: '4560a17a-ea59-4c4b-a2a4-78610dd04d4a'
+            responses:
+                '200':
+                    description: Sucesso
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    id:
+                                        type: string
+                                        description: Identificador único do pedido no Agulhão
+                                        example: '1'
+                                    idExterno:
+                                        type: string
+                                        description: Identificador único do pedido na integração (seu id)
+                                        example: '4560a17a-ea59-4c4b-a2a4-78610dd04d4a'
+                                    descontoDinheiro:
+                                        type: number
+                                        format: float
+                                        description: Desconto em dinheiro aplicado ao pedido
+                                        example: 10.00
+                                    valorFrete:
+                                        type: number
+                                        format: float
+                                        description: Valor do frete
+                                        example: 15.00
+                                    valorOutros:
+                                        type: number
+                                        format: float
+                                        description: Valor de outros custos adicionais do pedido
+                                        example: 5.00
+                                    valorBruto:
+                                        type: number
+                                        format: float
+                                        description: Valor bruto do pedido (sem descontos)
+                                        example: 100.00
+                                    valorLiquido:
+                                        type: number
+                                        format: float
+                                        description: Valor líquido do pedido (com descontos)
+                                        example: 90.00
+                                    observacoes:
+                                        type: string
+                                        description: Observações do pedido
+                                        example: 'Observações do pedido'
+                                    status:
+                                        type: string
+                                        description: Status do pedido
+                                        examples:
+                                            - pendente
+                                            - aguardandoDataEnvio
+                                            - aprovando
+                                            - produzindo
+                                            - separando
+                                            - faturando
+                                            - finalizado
+                                            - cancelado
+                                            - conferindo
+                                    cliente:
+                                        type: object
+                                        properties:
+                                            documento:
+                                                type: string
+                                                description: CNPJ ou CPF do cliente
+                                                example: '00000000000000'
+                                            nome:
+                                                type: string
+                                                description: Nome do cliente
+                                                example: 'Nome do Cliente'
+                                    entrega:
+                                        type: object
+                                        properties:
+                                            logradouro:
+                                                type: string
+                                                description: Logradouro do endereço de entrega
+                                                example: 'Avenida Paulista'
+                                            complemento:
+                                                type: string
+                                                description: Complemento do endereço de entrega
+                                                example: 'Apto 101'
+                                            numero:
+                                                type: string
+                                                description: Número do endereço de entrega
+                                                example: '1000'
+                                            bairro:
+                                                type: string
+                                                description: Bairro do endereço de entrega
+                                                example: 'Bela Vista'
+                                            cidade:
+                                                type: string
+                                                description: Nome da cidade do endereço de entrega
+                                                example: 'São Paulo'
+                                            uf:
+                                                type: string
+                                                description: Sigla da unidade federativa do endereço de entrega
+                                                example: 'SP'
+                                            ibgeCidade:
+                                                type: string
+                                                description: Código IBGE da cidade do endereço de entrega
+                                                example: '3550308'
+                                    danfeUrl:
+                                        type: string
+                                        description: URL do DANFE (Documento Auxiliar da Nota Fiscal Eletrônica)
+                                        example: 'https://api.agulhao.com.br/danfe/1234567890.pdf'
+                                    xmlNfeUrl:
+                                        type: string
+                                        description: URL do XML da Nota Fiscal Eletrônica
+                                        example: 'https://api.agulhao.com.br/xml/1234567890.xml'
+                                    previsaoEntrega:
+                                        type: string
+                                        format: date-time
+                                        description: Data prevista para entrega do pedido
+                                        example: '2025-01-01T00:00:00'
+                                    ultimaAtualizacao:
+                                        type: string
+                                        format: date-time
+                                        description: Data da última atualização do pedido
+                                        example: '2025-01-01T00:00:00'
+                                    fechamento:
+                                        type: string
+                                        format: date-time
+                                        description: Data de fechamento do pedido
+                                        example: '2025-01-02T00:00:00'
+                                    pagamentos:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                descricao:
+                                                    type: string
+                                                    description: Descrição do pagamento
+                                                    example: 'Dinheiro'
+                                                valor:
+                                                    type: number
+                                                    format: float
+                                                    description: Valor do pagamento
+                                                    example: 100.00
+                                    produtos:
+                                        type: array
+                                        items:
+                                            type: object
+                                            properties:
+                                                id:
+                                                    type: number
+                                                    description: Identificador único do produto
+                                                    example: 1
+                                                    format: integer
+                                                idGrade:
+                                                    type: number
+                                                    description: Identificador único da grade do produto
+                                                    example: 1
+                                                    format: integer
+                                                quantidade:
+                                                    type: number
+                                                    format: integer
+                                                    description: Quantidade do produto no pedido
+                                                    example: 1
+                                                valorUnitario:
+                                                    type: number
+                                                    format: float
+                                                    description: Valor unitário do produto no pedido
+                                                    example: 100.00
+                '400':
+                    description: Parâmetros inválidos ou faltando informações necessárias para recuperar o pedido.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    mensagem:
+                                        type: string
+                                        example: 'Parâmetros inválidos. Verifique os dados enviados.'
+                                    tecnico:
+                                        type: string
+                                        example: 'Erro ao validar os dados do pedido.'
+                '404':
+                    description: Pedido não encontrado
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    mensagem:
+                                        type: string
+                                        example: 'Pedido não encontrado.'
+                                    tecnico:
+                                        type: string
+                                        example: 'Erro ao buscar o pedido no banco de dados.'
+                '500':
+                    description: Erro interno do servidor ao tentar recuperar o pedido.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    mensagem:
+                                        type: string
+                                        example: 'Erro ao recuperar o pedido.'
+                                    tecnico:
+                                        type: string
+                                        example: 'Erro ao buscar o pedido no banco de dados.'
+        post:
+            operationId: postPedidos
+            tags:
+                - pedidos
+            security:
+                - chaveApi: []
+            summary: Cria um novo pedido
+            description: Cria um novo pedido no sistema Agulhão
+            requestBody:
+                required: true
+                description: Dados do pedido a ser criado
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                id:
+                                    type: number
+                                    description: ID do pedido no Agulhão (se não existir ou não for encontrado a partir do idExterno, será gerado um novo)
+                                idExterno:
+                                    type: string
+                                    description: ID do pedido na integração (seu id)
+                                descontoDinheiro:
+                                    type: number
+                                    format: float
+                                    description: Desconto em dinheiro aplicado ao pedido
+                                    example: 10.00
+                                valorFrete:
+                                    type: number
+                                    format: float
+                                    description: Valor do frete
+                                    example: 15.00
+                                observacoes:
+                                    type: string
+                                    description: Observações do pedido
+                                    example: 'Observações do pedido'
+                                valorOutros:
+                                    type: number
+                                    format: float
+                                    description: Valor de outros custos adicionais do pedido
+                                    example: 5.00
+                                cancelado:
+                                    type: boolean
+                                    description: Indica se o pedido foi cancelado
+                                    example: false
+                                tipoPedido:
+                                    type: string
+                                    description: Tipo do pedido
+                                filialCod:
+                                    type: string
+                                    description: Código da filial onde o pedido foi realizado
+                                tipoFrete:
+                                    type: string
+                                    description: Tipo de frete do pedido
+                                dataEmissao:
+                                    type: string
+                                    format: date-time
+                                    description: Data de emissão do pedido
+                                    example: '2025-01-01T00:00:00'
+                                dataFechamento:
+                                    type: string
+                                    format: date-time
+                                    description: Data de fechamento do pedido
+                                    example: '2025-01-02T00:00:00'
+                                guiaCod:
+                                    type: number
+                                    description: Código do guia associado ao pedido
+                                    example: 1
+                                vendedorCod:
+                                    type: number
+                                    description: Código do vendedor associado ao pedido
+                                    example: 1
+                                transportadoraCod:
+                                    type: number
+                                    description: Código da transportadora associada ao pedido
+                                    example: 1
+                                gerenteProjetoCod:
+                                    type: number
+                                    description: Código do gerente de projeto associado ao pedido
+                                    example: 1
+                                responsavelCod:
+                                    type: number
+                                    description: Código do responsável pelo pedido
+                                    example: 1
+                                tipoLancamentoCod:
+                                    type: number
+                                    description: Código do tipo de lançamento do pedido
+                                    example: 1
+                                cliente:
+                                    type: object
+                                    properties:
+                                        pessoaCod:
+                                            type: number
+                                            description: Código da pessoa/cliente (se ja existir no agulhao)
+                                            example: 1
+                                        documento:
+                                            type: string
+                                            description: CNPJ ou CPF do cliente
+                                            example: '00000000000000'
+                                        telefone:
+                                            type: string
+                                            description: Telefone do cliente
+                                            example: '1112345678'
+                                        email:
+                                            type: string
+                                            description: E-mail do cliente
+                                            example: 'contato@cliente.com'
+                                        nome:
+                                            type: string
+                                            description: Nome do cliente
+                                            example: 'Nome do Cliente'
+                                        logradouro:
+                                            type: string
+                                            description: Logradouro do endereço do cliente
+                                            example: 'Avenida Paulista'
+                                        complemento:
+                                            type: string
+                                            description: Complemento do endereço do cliente
+                                            example: 'Apto 101'
+                                        numero:
+                                            type: string
+                                            description: Número do endereço do cliente
+                                            example: '1000'
+                                        bairro:
+                                            type: string
+                                            description: Bairro do endereço do cliente
+                                            example: 'Bela Vista'
+                                        cidade:
+                                            type: string
+                                            description: Nome da cidade do endereço do cliente
+                                            example: 'São Paulo'
+                                        uf:
+                                            type: string
+                                            description: Sigla da unidade federativa do endereço do cliente
+                                            example: 'SP'
+                                        ibgeCidade:
+                                            type: string
+                                            description: Código IBGE da cidade do endereço do cliente
+                                            example: '3550308'
+                                entrega:
+                                    type: object
+                                    properties:
+                                        logradouro:
+                                            type: string
+                                            description: Logradouro do endereço de entrega
+                                            example: 'Avenida Paulista'
+                                        complemento:
+                                            type: string
+                                            description: Complemento do endereço de entrega
+                                            example: 'Apto 101'
+                                        numero:
+                                            type: string
+                                            description: Número do endereço de entrega
+                                            example: '1000'
+                                        bairro:
+                                            type: string
+                                            description: Bairro do endereço de entrega
+                                            example: 'Bela Vista'
+                                        cidade:
+                                            type: string
+                                            description: Nome da cidade do endereço de entrega
+                                            example: 'São Paulo'
+                                        uf:
+                                            type: string
+                                            description: Sigla da unidade federativa do endereço de entrega
+                                            example: 'SP'
+                                        ibgeCidade:
+                                            type: string
+                                            description: Código IBGE da cidade do endereço de entrega
+                                            example: '3550308'
+                                produtos:
+                                    type: array
+                                    items:
+                                        type: object
+                                        required:
+                                            - id
+                                            - idGrade
+                                            - quantidade
+                                            - valorUnitario
+                                        properties:
+                                            id:
+                                                type: string
+                                                description: Identificador único do produto
+                                                example: '1'
+                                            idGrade:
+                                                type: string
+                                                description: Identificador único da grade do produto
+                                                example: '1'
+                                            quantidade:
+                                                type: number
+                                                format: integer
+                                                description: Quantidade do produto no pedido
+                                                example: 1
+                                            valorUnitario:
+                                                type: number
+                                                format: float
+                                                description: Valor unitário do produto no pedido
+                                                example: 100.00
+                                pagamentos:
+                                    type: array
+                                    items:
+                                        type: object
+                                        required:
+                                            - tipoLancamentoCod
+                                            - valor
+                                            - dataVencimento
+                                        properties:
+                                            valor:
+                                                type: number
+                                                format: float
+                                                description: Valor do pagamento
+                                                example: 100.00
+                                            pago:
+                                                type: boolean
+                                                description: Indica se o pagamento foi realizado
+                                                example: false
+                                            gateway:
+                                                type: string
+                                                description: Gateway de pagamento utilizado
+                                                example: 'MERCADO PAGO'
+                        examples:
+                            contrato:
+                                summary: Contrato
+                                description: 'Contratos no Agulhão são tratados como pedidos e identificados pelo tipo de lançamento'
+                                value:
+                                    filialCod: 1
+                                    tipoLancamentoCod: 5
+                                    vendedorCod: 3530
+                                    responsavelCod: 221
+                                    gerenteProjetoCod: 221
+                                    dataEmissao: '2025-06-25'
+                                    dataFechamento: '2025-06-25'
+                                    observacoes: 'Contrato de teste'
+                                    cliente:
+                                        pessoaCod: 3521
+                                    produtos:
+                                        - id: '1'
+                                          idGrade: '1'
+                                          quantidade: 1
+                                          valorUnitario: 100.00
+                            comCadastroDeCliente:
+                                summary: Com cadastro de cliente
+                                description: Exemplo de pedido com cadastro de cliente (se o cliente não existir, será criado um novo cadastro no sistema)
+                                value:
+                                    idExterno: '4560a17a-ea59-4c4b-a2a4-78610dd04d4a'
+                                    descontoDinheiro: 0
+                                    valorFrete: 15.00
+                                    observacoes: 'Pedido de teste com cadastro de cliente'
+                                    valorOutros: 0
+                                    cancelado: false
+                                    cliente:
+                                        documento: '00000000000000'
+                                        nome: 'Nome do Cliente'
+                                        telefone: '1112345678'
+                                        email: 'contato@cliente.com'
+                                        logradouro: 'Avenida Paulista'
+                                        complemento: 'Apto 101'
+                                        numero: '1000'
+                                        cep: '01000000'
+                                        bairro: 'Bela Vista'
+                                    produtos:
+                                        - id: 5598
+                                          idGrade: 1
+                                          quantidade: 1
+                                          valorUnitario: 79.9
+                                    pagamentos:
+                                        - valor: 79.9
+                                          pago: true
+                                          gateway: 'PAGSEGURO'
+                            comPagamento:
+                                summary: Básico com pagamento
+                                description: Exemplo de pedido com pagamento (Se pago for "false" é considerado como um pré pagamento)
+                                value:
+                                    observacoes: 'Pedido de teste com pagamento'
+                                    cliente:
+                                        pessoaCod: 1
+                                    produtos:
+                                        - id: '1'
+                                          idGrade: '1'
+                                          quantidade: 2
+                                          valorUnitario: 50.00
+                                    pagamentos:
+                                        - valor: 100.00
+                                          pago: true
+                                          gateway: 'MERCADO PAGO'
+                            semPagamento:
+                                summary: Básico sem pagamento
+                                value:
+                                    observacoes: 'Pedido de teste sem pagamento'
+                                    cliente:
+                                        pessoaCod: 1
+                                    produtos:
+                                        - id: '1'
+                                          idGrade: '1'
+                                          quantidade: 2
+                                          valorUnitario: 50.00
+
+            responses:
+                '201':
+                    description: Pedido criado com sucesso
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    idAgulhao:
+                                        type: string
+                                        description: Identificador único do pedido criado no Agulhão
+                                        example: '1'
+                                    idExterno:
+                                        type: string
+                                        description: Identificador único do pedido na integração (seu id)
+                                        example: '4560a17a-ea59-4c4b-a2a4-78610dd04d4a'
+                '400':
+                    description: Parâmetros inválidos ou faltando informações necessárias para criar o pedido.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    mensagem:
+                                        type: string
+                                        example: 'Parâmetros inválidos. Verifique os dados enviados.'
+                                    tecnico:
+                                        type: string
+                                        example: 'Erro ao validar os dados do pedido.'
+                '500':
+                    description: Erro interno do servidor ao tentar criar o pedido.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    mensagem:
+                                        type: string
+                                        example: 'Erro ao criar o pedido.'
+                                    tecnico:
+                                        type: string
+                                        example: 'Erro ao salvar o pedido no banco de dados.'
+        patch:
+            operationId: patchPedidos
+            tags:
+                - pedidos
+            security:
+                - chaveApi: []
+            summary: Atualiza um pedido existente
+            description: 'Atualiza parcialmente um pedido existente no sistema Agulhão. (Obs: É obrigatório informar id ou idExterno. Se ambos forem fornecidos, o id terá prioridade.)'
+            requestBody:
+                required: true
+                description: Dados do pedido a ser atualizado
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                idExterno:
+                                    type: string
+                                    description: ID do pedido na integração (seu id)
+                                cancelado:
+                                    type: boolean
+                                    description: Indica se o pedido foi cancelado
+                                    example: false
+                                observacoes:
+                                    type: string
+                                    description: Observações do pedido
+                                    example: 'Observações atualizadas do pedido'
+                        examples:
+                            cancelando:
+                                summary: Cancelando pedido
+                                description: Exemplo de atualização de pedido para cancelamento
+                                value:
+                                    idExterno: '4560a17a-ea59-4c4b-a2a4-78610dd04d4a'
+                                    cancelado: true
+                            confirmandoPagamento:
+                                summary: Confirmando pagamento
+                                description: Exemplo de atualização de pedido para confirmar pagamento
+                                value:
+                                    idExterno: '4560a17a-ea59-4c4b-a2a4-78610dd04d4a'
+                                    pagamentos:
+                                        - valor: 79.9
+                                          pago: true
+                                          gateway: 'PAGSEGURO'
+
+            responses:
+                '200':
+                    description: Pedido atualizado com sucesso
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    idAgulhao:
+                                        type: string
+                                        description: Identificador único do pedido criado no Agulhão
+                                        example: '1'
+                                    idExterno:
+                                        type: string
+                                        description: Identificador único do pedido na integração (seu id)
+                                        example: '4560a17a-ea59-4c4b-a2a4-78610dd04d4a'
+                '400':
+                    description: Parâmetros inválidos ou faltando informações necessárias para atualizar o pedido.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    mensagem:
+                                        type: string
+                                        example: 'Parâmetros inválidos. Verifique os dados enviados.'
+                                    tecnico:
+                                        type: string
+                                        example: 'Erro ao validar os dados do pedido.'
+                '500':
+                    description: Erro interno do servidor ao tentar atualizar o pedido.
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    mensagem:
+                                        type: string
+                                        example: 'Erro ao atualizar o pedido.'
+                                    tecnico:
+                                        type: string
+                                        example: 'Erro ao salvar o pedido no banco de dados.'
+    /pessoas/financeiro:
+        get:
+            operationId: getPessoasFinanceiro
+            tags:
+                - pessoas
+            security:
+                - chaveApi: []
+            summary: Retorna cliente com o seu financeiro
+            description: Retorna cliente específico com o seu financeiro (duplicatas em aberto)
+            parameters:
+                - name: id
+                  in: query
+                  description: Identificador único do usuário
+                  schema:
+                      type: string
+                      example: '1'
+                - name: duplicataId
+                  in: query
+                  description: Identificador único da duplicata
+                  schema:
+                      type: string
+                      example: '1'
+                - name: pedidoId
+                  in: query
+                  description: Identificador único do pedido
+                  schema:
+                      type: string
+                      example: '1'
+            responses:
+                '200':
+                    description: Sucesso
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        id:
+                                            type: string
+                                            description: Identificador único do usuário
+                                            example: '1'
+                                        razaoSocial:
+                                            type: string
+                                            description: Razão social do usuário
+                                            example: 'RAZÃO SOCIAL DA EMPRESA'
+                                        documento:
+                                            type: string
+                                            description: CNPJ ou CPF do usuário
+                                            example: '00000000000000'
+                                        fantasia:
+                                            type: string
+                                            description: Nome fantasia do usuário
+                                            example: 'FANTASIA DA EMPRESA'
+                                        email:
+                                            type: string
+                                            description: E-mail do usuário
+                                            example: 'contato@empresa.com'
+                                        telefone:
+                                            type: string
+                                            description: Telefone do usuário
+                                            example: '1112345678'
+                                        celular:
+                                            type: string
+                                            description: Celular do usuário
+                                            example: '11912345678'
+                                        ultimaAtualizacao:
+                                            type: string
+                                            format: date-time
+                                            description: Data da última atualização do usuário
+                                            example: '2025-01-01T00:00:00'
+                                        endereco:
+                                            type: object
+                                            properties:
+                                                cidadeId:
+                                                    type: string
+                                                    description: Identificador da cidade do endereço (Código IBGE)
+                                                    example: '1'
+                                                cidadeNome:
+                                                    type: string
+                                                    description: Nome da cidade do endereço
+                                                    example: 'São Paulo'
+                                                uf:
+                                                    type: string
+                                                    description: Sigla da unidade federativa do endereço
+                                                    example: 'SP'
+                                                cep:
+                                                    type: string
+                                                    description: CEP do endereço
+                                                    example: '01000000'
+                                                logradouro:
+                                                    type: string
+                                                    description: Logradouro do endereço
+                                                    example: 'Avenida Paulista'
+                                                numero:
+                                                    type: string
+                                                    description: Número do endereço
+                                                    example: '1000'
+                                                complemento:
+                                                    type: string
+                                                    description: Complemento do endereço
+                                                    example: 'Apto 101'
+                                                bairro:
+                                                    type: string
+                                                    description: Bairro do endereço
+                                                    example: 'Bela Vista'
+                                        duplicatas:
+                                            type: array
+                                            items:
+                                                type: object
+                                                properties:
+                                                    id:
+                                                        type: string
+                                                        description: Identificador único da duplicata
+                                                        example: '1'
+                                                    filialId:
+                                                        type: string
+                                                        description: Identificador da filial da duplicata
+                                                        example: '1'
+                                                    filialNome:
+                                                        type: string
+                                                        description: Nome da filial da duplicata
+                                                        example: 'Filial 1'
+                                                    emissao:
+                                                        type: string
+                                                        format: date-time
+                                                        description: Data de emissão da duplicata
+                                                        example: '2025-01-01T00:00:00'
+                                                    vencimento:
+                                                        type: string
+                                                        format: date-time
+                                                        description: Data de vencimento da duplicata
+                                                        example: '2025-02-01T00:00:00'
+                                                    numero:
+                                                        type: string
+                                                        description: Número da duplicata
+                                                        example: '123456'
+                                                    localCobrancaId:
+                                                        type: string
+                                                        description: Identificador do local de cobrança da duplicata
+                                                        example: '1'
+                                                    valor:
+                                                        type: number
+                                                        format: float
+                                                        description: Valor da duplicata
+                                                        example: 1000.00
+                                                    saldo:
+                                                        type: number
+                                                        format: float
+                                                        description: Saldo da duplicata
+                                                        example: 500.00
+                                                    diasAtrasado:
+                                                        type: integer
+                                                        description: Dias de atraso da duplicata
+                                                        example: 10
+                                                    diasVencer:
+                                                        type: integer
+                                                        description: Dias para vencer da duplicata
+                                                        example: 5
+                '400':
+                    description: Parâmetros inválidos
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    mensagem:
+                                        type: string
+                                        example: 'Parâmetros inválidos. Informe o id da pessoa, duplicataId ou pedidoId.'
+                '404':
+                    description: Usuário não encontrado
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    mensagem:
+                                        type: string
+                                        example: 'Pessoa não encontrada.'
+                '500':
+                    description: Erro interno do servidor
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    mensagem:
+                                        type: string
+                                        example: 'Erro ao buscar financeiro da pessoa.'
+    /pessoas/duplicatas/aberto:
+        get:
+            operationId: getPessoasDuplicatasAberto
+            tags:
+                - pessoas
+            security:
+                - chaveApi: []
+            summary: Retorna duplicatas em aberto
+            description: Retorna lista de duplicatas em aberto, filtrando por data de vencimento e cliente (se informado)
+            parameters:
+                - name: cliente
+                  in: query
+                  description: Identificador único do usuário
+                  schema:
+                      type: string
+                      example: '1'
+                - name: vencimentoInicial
+                  in: query
+                  description: Data inicial de vencimento das duplicatas
+                  required: true
+                  schema:
+                      type: string
+                      example: '2025-08-06'
+                - name: vencimentoFinal
+                  in: query
+                  description: Data final de vencimento das duplicatas
+                  required: true
+                  schema:
+                      type: string
+                      example: '2025-08-06'
+            responses:
+                '200':
+                    description: Sucesso
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        id:
+                                            type: number
+                                            description: Identificador único da duplicata
+                                            example: 1
+                                        filialId:
+                                            type: number
+                                            description: Identificador da filial da duplicata
+                                            example: 1
+                                        filialNome:
+                                            type: string
+                                            description: Nome da filial da duplicata
+                                            example: 'Filial 1'
+                                        emissao:
+                                            type: string
+                                            description: Data de emissão da duplicata
+                                            example: '2025-09-10'
+                                        vencimento:
+                                            type: string
+                                            description: Data de vencimento da duplicata
+                                            example: '2025-10-10'
+                                        valor:
+                                            type: number
+                                            format: float
+                                            description: Valor da duplicata
+                                            example: 1000.00
+                                        saldo:
+                                            type: number
+                                            format: float
+                                            description: Saldo da duplicata em aberto (valor devido)
+                                            example: 1000.00
+                                        numero:
+                                            type: string
+                                            description: Número da duplicata
+                                            example: '123456'
+                                        pedidoId:
+                                            type: string
+                                            description: Identificador do pedido relacionado à duplicata
+                                            example: '1'
+                                        clienteCodigo:
+                                            type: number
+                                            description: Código do cliente relacionado à duplicata
+                                            example: 1
+                                        clienteNome:
+                                            type: string
+                                            description: Nome do cliente relacionado à duplicata
+                                            example: 'Nome do Cliente'
+                                        clienteFone:
+                                            type: string
+                                            description: Telefone do cliente relacionado à duplicata
+                                            example: '11912345678'
+                                        clienteCelular:
+                                            type: string
+                                            description: Celular do cliente relacionado à duplicata
+                                            example: '11912345678'
+                                        clienteEmail:
+                                            type: string
+                                            description: E-mail do cliente relacionado à duplicata
+                                            example: 'teste@softros.com.br'
+                '400':
+                    description: Parâmetros inválidos
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    error:
+                                        type: string
+                                        example: 'Os parâmetros vencimentoInicial e vencimentoFinal são obrigatórios.'
+
+    /pessoas:
+        get:
+            operationId: getPessoas
+            tags:
+                - pessoas
+            security:
+                - chaveApi: []
+            summary: Retorna usuários cadastradas no sistema
+            description: Retorna lista de usuários cadastradas no sistema
+            parameters:
+                - name: pagina
+                  in: query
+                  description: Página atual da busca
+                  schema:
+                      type: string
+                      default: '1'
+                - name: qtdePorPagina
+                  in: query
+                  description: Quantidade de usuários por página
+                  schema:
+                      type: string
+                      default: '100'
+                - name: ultimaAtualizacao
+                  in: query
+                  description: Retorna apenas usuários que foram atualizados após a data informada
+                  schema:
+                      type: string
+                      format: date-time
+                      example: '2025-01-01T00:00:00'
+                - name: vendedor
+                  in: query
+                  description: Retorna apenas usuários que são vendedores
+                  schema:
+                      type: string
+                      default: '0'
+                      enum:
+                          - '1'
+                          - '0'
+
+                - name: cliente
+                  in: query
+                  description: Retorna apenas usuários que são clientes
+                  schema:
+                      type: string
+                      default: '0'
+                      enum:
+                          - '1'
+                          - '0'
+
+                - name: guia
+                  in: query
+                  description: Retorna apenas usuários que são guias
+                  schema:
+                      type: string
+                      default: '0'
+                      enum:
+                          - '1'
+                          - '0'
+
+            responses:
+                '200':
+                    description: Sucesso
+                    headers:
+                        x-tem-proxima-pagina:
+                            description: Indica se há uma próxima página de resultados
+                            schema:
+                                type: string
+                                example: ['true', 'false']
+                        x-pagina:
+                            description: Página atual da busca
+                            schema:
+                                type: string
+                                example: '1'
+                        x-qtde-por-pagina:
+                            description: Quantidade de usuários por página
+                            schema:
+                                type: string
+                                example: '100'
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        id:
+                                            type: string
+                                            description: Identificador único do usuário
+                                            example: '1'
+                                        razaoSocial:
+                                            type: string
+                                            description: Razão social do usuário
+                                            example: 'RAZÃO SOCIAL DA EMPRESA'
+                                        documento:
+                                            type: string
+                                            description: CNPJ ou CPF do usuário
+                                            example: '00000000000000'
+                                        fantasia:
+                                            type: string
+                                            description: Nome fantasia do usuário
+                                            example: 'FANTASIA DA EMPRESA'
+                                        email:
+                                            type: string
+                                            description: E-mail do usuário
+                                            example: 'contato@empresa.com'
+                                        telefone:
+                                            type: string
+                                            description: Telefone do usuário
+                                            example: '1112345678'
+                                        celular:
+                                            type: string
+                                            description: Celular do usuário
+                                            example: '11912345678'
+                                        guia:
+                                            type: boolean
+                                            description: Indica se o usuário é um guia
+                                            example: true
+                                        vendedor:
+                                            type: boolean
+                                            description: Indica se o usuário é um vendedor
+                                            example: false
+                                        cliente:
+                                            type: boolean
+                                            description: Indica se o usuário é um cliente
+                                            example: true
+                                        ultimaAtualizacao:
+                                            type: string
+                                            format: date-time
+                                            description: Data da última atualização do usuário
+                                            example: '2025-01-01T00:00:00'
+                                        endereco:
+                                            type: object
+                                            properties:
+                                                cidadeId:
+                                                    type: string
+                                                    description: Identificador da cidade do endereço (Código IBGE)
+                                                    example: '1'
+                                                cidadeNome:
+                                                    type: string
+                                                    description: Nome da cidade do endereço
+                                                    example: 'São Paulo'
+                                                uf:
+                                                    type: string
+                                                    description: Sigla da unidade federativa do endereço
+                                                    example: 'SP'
+                                                cep:
+                                                    type: string
+                                                    description: CEP do endereço
+                                                    example: '01000000'
+                                                logradouro:
+                                                    type: string
+                                                    description: Logradouro do endereço
+                                                    example: 'Avenida Paulista'
+                                                numero:
+                                                    type: string
+                                                    description: Número do endereço
+                                                    example: '1000'
+                                                complemento:
+                                                    type: string
+                                                    description: Complemento do endereço
+                                                    example: 'Apto 101'
+                                                bairro:
+                                                    type: string
+                                                    description: Bairro do endereço
+                                                    example: 'Bela Vista'
+    /tipos-lancamento:
+        get:
+            operationId: getTiposLancamento
+            tags:
+                - 'tipos-lancamento'
+            security:
+                - chaveApi: []
+            summary: Busca tipos de lançamento disponíveis
+            description: Retorna lista com os tipos de lançamento
+            responses:
+                '200':
+                    description: Sucesso
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        id:
+                                            type: string
+                                            description: Identificador do tipo de lançamento
+                                            example: '1'
+                                        descricao:
+                                            type: string
+                                            description: Descrição do tipo de lançamento
+                                            example: 'VENDA'
+    /filiais:
+        get:
+            tags:
+                - filiais
+            security:
+                - chaveApi: []
+            summary: Busca filiais disponíveis
+            description: Retorna as filiais que a integração tem permissão de acessar
+            operationId: getFiliais
+            responses:
+                '200':
+                    description: Sucesso
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    type: object
+                                    properties:
+                                        id:
+                                            type: string
+                                            description: Identificador único da filial
+                                            example: '1'
+                                        razaoSocial:
+                                            type: string
+                                            description: Razão social completa da filial
+                                            example: 'RAZÃO SOCIAL DA EMPRESA'
+                                        cnpj:
+                                            type: string
+                                            description: CNPJ da filial
+                                            example: '00000000000000'
+                                        fantasia:
+                                            type: string
+                                            description: Nome fantasia da filial
+                                            example: 'FANTASIA'
