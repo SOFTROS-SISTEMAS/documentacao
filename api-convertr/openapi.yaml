@@ -1,7 +1,7 @@
 openapi: 3.1.0
 info:
-    title: Agulhão API
-    description: API do sistema Agulhão
+    title: Agulhão API - Convertr
+    description: API do sistema Agulhão para integração com Convertr.
     contact:
         email: contato@softros.com.br
         url: https://agulhao.com.br
@@ -13,11 +13,11 @@ servers:
     - url: https://api-integracoes.agulhao.com.br
       description: Produção
 tags:
-    - name: filiais
-    - name: pessoas
-    - name: produtos
-    - name: pedidos
-    - name: tipos-lancamento
+    - name: filiais-cr
+    - name: pessoas-cr
+    - name: produtos-cr
+    - name: pedidos-cr
+    - name: tipos-lancamento-cr
 components:
     securitySchemes:
         chaveApi:
@@ -30,7 +30,7 @@ paths:
         get:
             operationId: getEstoqueProdutos
             tags:
-                - produtos
+                - produtos-cr
             security:
                 - chaveApi: []
             summary: Retorna estoque de todos os produtos
@@ -93,7 +93,7 @@ paths:
         get:
             operationId: getEstoqueProdutoEspecifico
             tags:
-                - produtos
+                - produtos-cr
             security:
                 - chaveApi: []
             summary: Retorna estoque de um produto
@@ -133,7 +133,7 @@ paths:
         get:
             operationId: getProdutos
             tags:
-                - produtos
+                - produtos-cr
             security:
                 - chaveApi: []
             summary: Retorna produtos
@@ -340,7 +340,7 @@ paths:
         get:
             operationId: getPedidos
             tags:
-                - pedidos
+                - pedidos-cr
             security:
                 - chaveApi: []
             summary: Retorna pedido
@@ -562,7 +562,7 @@ paths:
         post:
             operationId: postPedidos
             tags:
-                - pedidos
+                - pedidos-cr
             security:
                 - chaveApi: []
             summary: Cria um novo pedido
@@ -901,7 +901,7 @@ paths:
         patch:
             operationId: patchPedidos
             tags:
-                - pedidos
+                - pedidos-cr
             security:
                 - chaveApi: []
             summary: Atualiza um pedido existente
@@ -988,7 +988,7 @@ paths:
         get:
             operationId: getPessoasFinanceiro
             tags:
-                - pessoas
+                - pessoas-cr
             security:
                 - chaveApi: []
             summary: Retorna cliente com o seu financeiro
@@ -1177,7 +1177,7 @@ paths:
         get:
             operationId: getPessoasDuplicatasAberto
             tags:
-                - pessoas
+                - pessoas-cr
             security:
                 - chaveApi: []
             summary: Retorna duplicatas em aberto
@@ -1286,7 +1286,7 @@ paths:
         get:
             operationId: getPessoas
             tags:
-                - pessoas
+                - pessoas-cr
             security:
                 - chaveApi: []
             summary: Retorna usuários cadastradas no sistema
@@ -1451,7 +1451,7 @@ paths:
         get:
             operationId: getTiposLancamento
             tags:
-                - 'tipos-lancamento'
+                - 'tipos-lancamento-cr'
             security:
                 - chaveApi: []
             summary: Busca tipos de lançamento disponíveis
@@ -1477,7 +1477,7 @@ paths:
     /filiais:
         get:
             tags:
-                - filiais
+                - filiais-cr
             security:
                 - chaveApi: []
             summary: Busca filiais disponíveis
