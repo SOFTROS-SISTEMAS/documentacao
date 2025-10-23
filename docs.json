@@ -132,6 +132,12 @@
                             "web/pessoal/FollowUp",
                             "web/pessoal/Liberao"
                         ]
+                    },
+                    {
+                        "group": "Integrações",
+                        "pages": [
+                            "web/integracoes/sicoob.mdx"
+                        ]
                     }
                 ]
             },
