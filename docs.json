@@ -147,55 +147,55 @@
                     {
                         "group": "Começando",
                         "pages": [
-                            "aplicativo/comecando/instalando-aplicativo.mdx",
-                            "aplicativo/comecando/entendendo-a-interface.mdx",
-                            "aplicativo/comecando/sincronizacao.mdx",
-                            "aplicativo/comecando/troca-de-empresa.mdx",
-                            "aplicativo/comecando/troca-filial.mdx"
+                            "aplicativo/comecando/instalando-aplicativo",
+                            "aplicativo/comecando/entendendo-a-interface",
+                            "aplicativo/comecando/sincronizacao",
+                            "aplicativo/comecando/troca-de-empresa",
+                            "aplicativo/comecando/troca-filial"
                         ]
                     },
                     {
                         "group": "Clientes",
                         "pages": [
-                            "aplicativo/clientes/cadastrando-cliente.mdx",
-                            "aplicativo/clientes/cobranca.mdx",
-                            "aplicativo/clientes/colaborador.mdx",
-                            "aplicativo/clientes/inadimplentes.mdx"
+                            "aplicativo/clientes/cadastrando-cliente",
+                            "aplicativo/clientes/cobranca",
+                            "aplicativo/clientes/colaborador",
+                            "aplicativo/clientes/inadimplentes"
                         ]
                     },
                     {
                         "group": "Vendas",
                         "pages": [
-                            "aplicativo/vendas/forca-vendas.mdx",
-                            "aplicativo/vendas/comissao.mdx",
-                            "aplicativo/vendas/crm.mdx",
-                            "aplicativo/vendas/link-compartilhamento.mdx",
-                            "aplicativo/vendas/tabela-preco.mdx",
-                            "aplicativo/vendas/venda-balcao.mdx"
+                            "aplicativo/vendas/forca-vendas",
+                            "aplicativo/vendas/comissao",
+                            "aplicativo/vendas/crm",
+                            "aplicativo/vendas/link-compartilhamento",
+                            "aplicativo/vendas/tabela-preco",
+                            "aplicativo/vendas/venda-balcao"
                         ]
                     },
                     {
                         "group": "Produtos",
                         "pages": [
-                            "aplicativo/produtos/produtos.mdx",
-                            "aplicativo/produtos/ranking-produtos.mdx"
+                            "aplicativo/produtos/produtos",
+                            "aplicativo/produtos/ranking-produtos"
                         ]
                     },
                     {
                         "group": "Administração",
                         "pages": [
-                            "aplicativo/administracao/colaborador.mdx",
-                            "aplicativo/administracao/conta-atrasada.mdx",
-                            "aplicativo/administracao/estatisticas.mdx",
-                            "aplicativo/administracao/excecao.mdx"
+                            "aplicativo/administracao/colaborador",
+                            "aplicativo/administracao/conta-atrasada",
+                            "aplicativo/administracao/estatisticas",
+                            "aplicativo/administracao/excecao"
                         ]
                     },
                     {
                         "group": "Confecção",
                         "pages": [
-                            "aplicativo/confeccao/acompanhar-producao.mdx",
-                            "aplicativo/confeccao/apontamente-parada.mdx",
-                            "aplicativo/confeccao/cortes.mdx"
+                            "aplicativo/confeccao/acompanhar-producao",
+                            "aplicativo/confeccao/apontamente-parada",
+                            "aplicativo/confeccao/cortes"
                         ]
                     }
                 ]
