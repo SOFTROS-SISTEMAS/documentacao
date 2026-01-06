@@ -145,9 +145,57 @@
                 "tab": "Agulhão App",
                 "groups": [
                     {
-                        "group": "Em construção 🚧",
+                        "group": "Começando",
                         "pages": [
-                            "aplicativo/em-construcao"
+                            "aplicativo/comecando/instalando-aplicativo.mdx",
+                            "aplicativo/comecando/entendendo-a-interface.mdx",
+                            "aplicativo/comecando/sincronizacao.mdx",
+                            "aplicativo/comecando/troca-de-empresa.mdx",
+                            "aplicativo/comecando/troca-filial.mdx"
+                        ]
+                    },
+                    {
+                        "group": "Clientes",
+                        "pages": [
+                            "aplicativo/clientes/cadastrando-cliente.mdx",
+                            "aplicativo/clientes/cobranca.mdx",
+                            "aplicativo/clientes/colaborador.mdx",
+                            "aplicativo/clientes/inadimplentes.mdx"
+                        ]
+                    },
+                    {
+                        "group": "Vendas",
+                        "pages": [
+                            "aplicativo/vendas/forca-vendas.mdx",
+                            "aplicativo/vendas/comissao.mdx",
+                            "aplicativo/vendas/crm.mdx",
+                            "aplicativo/vendas/link-compartilhamento.mdx",
+                            "aplicativo/vendas/tabela-preco.mdx",
+                            "aplicativo/vendas/venda-balcao.mdx"
+                        ]
+                    },
+                    {
+                        "group": "Produtos",
+                        "pages": [
+                            "aplicativo/produtos/produtos.mdx",
+                            "aplicativo/produtos/ranking-produtos.mdx"
+                        ]
+                    },
+                    {
+                        "group": "Administração",
+                        "pages": [
+                            "aplicativo/administracao/colaborador.mdx",
+                            "aplicativo/administracao/conta-atrasada.mdx",
+                            "aplicativo/administracao/estatisticas.mdx",
+                            "aplicativo/administracao/excecao.mdx"
+                        ]
+                    },
+                    {
+                        "group": "Confecção",
+                        "pages": [
+                            "aplicativo/confeccao/acompanhar-producao.mdx",
+                            "aplicativo/confeccao/apontamente-parada.mdx",
+                            "aplicativo/confeccao/cortes.mdx"
                         ]
                     }
                 ]
