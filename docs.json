@@ -12,221 +12,220 @@
         "prompt": "Pesquisar..."
     },
     "navigation": {
-        "tabs": [
+      "global": {
+        "anchors": [
+          {
+            "anchor": "Site",
+            "icon": "globe",
+            "href": "https://agulhao.com.br"
+          },
+          {
+            "anchor": "Teste Grátis",
+            "icon": "fire",
+            "href": "https://agulhao.com.br/teste"
+          }
+        ]
+      },
+      "tabs": [
+        {
+          "tab": "Agulhão Web",
+          "groups": [
             {
-                "tab": "Agulhão Web",
-                "groups": [
-                    {
-                        "group": "Geral",
-                        "pages": [
-                            "web/geral/favoritos"
-                        ]
-                    },
-                    {
-                        "group": "Atualizacoes",
-                        "pages": [
-                            "web/atualizacoes/Contaa-a-receber"
-                        ]
-                    },
-                    {
-                        "group": "Dashboard",
-                        "pages": [
-                            "web/dashboard/Checklist-Vendedores",
-                            "web/dashboard/ClientesXColecoes",
-                            "web/dashboard/Resumo-da-colecao",
-                            "web/dashboard/Vendars-por-vendedor",
-                            "web/dashboard/curva-ABC",
-                            "web/dashboard/ponto-do-equilibrio",
-                            "web/dashboard/resumo-do-dia",
-                            "web/dashboard/vendas-com-poucos-itens",
-                            "web/dashboard/vendas-por0tabela-de-preco"
-                        ]
-                    },
-                    {
-                        "group": "Produtos",
-                        "pages": [
-                            "web/produtos/cadastro-produtos",
-                            "web/produtos/cadastro-marcas",
-                            "web/produtos/cadastro-departamento",
-                            "web/produtos/cadastro-cores",
-                            "web/produtos/entrada-produtos",
-                            "web/produtos/cadastro-grupos",
-                            "web/produtos/Balanco",
-                            "web/produtos/alteracao-de-preco-multipla",
-                            "web/produtos/alteracao-de-preco-por-quantidade",
-                            "web/produtos/relatorio-de-estoque",
-                            "web/produtos/relatorio-de-etiquetas"
-                        ]
-                    },
-                    {
-                        "group": "Clientes",
-                        "pages": [
-                            "web/clientes/frente-caixa",
-                            "web/clientes/historico-cliente",
-                            "web/clientes/link-compartilhamento",
-                            "web/clientes/vale-presente",
-                            "web/clientes/checkout",
-                            "web/clientes/desconto-sobre-venda",
-                            "web/clientes/impresso-de-vendas",
-                            "web/clientes/pedidos-de-saida",
-                            "web/clientes/siada-de-produto-com-defeito",
-                            "web/clientes/troca-de-mercadorias"
-                        ]
-                    },
-                    {
-                        "group": "Financeiro",
-                        "pages": [
-                            "web/financeiro/contas-pagar",
-                            "web/financeiro/contas-receber",
-                            "web/financeiro/caixa",
-                            "web/financeiro/TEF",
-                            "web/financeiro/Cashback",
-                            "web/financeiro/cobranca-por-whatsapp",
-                            "web/financeiro/creditos-debitos",
-                            "web/financeiro/homologacao-de-boletos"
-                        ]
-                    },
-                    {
-                        "group": "Relatórios",
-                        "pages": [
-                            "web/relatorios/resumo-vendas"
-                        ]
-                    },
-                    {
-                        "group": "Faturamento",
-                        "pages": [
-                            "web/Faturamento/baixar-xml-receita",
-                            "web/Faturamento/condicional-em-aberto",
-                            "web/Faturamento/nfe-e-nf-da-devolucao"
-                        ]
-                    },
-                    {
-                        "group": "Fornecedores",
-                        "pages": [
-                            "web/fornecedores/cadastro-de-fornecedor",
-                            "web/fornecedores/import"
-                        ]
-                    },
-                    {
-                        "group": "Funcionários",
-                        "pages": [
-                            "web/funcionarios/cadastro-de-funcionario",
-                            "web/funcionarios/margem-para-arredondamento"
-                        ]
-                    },
-                    {
-                        "group": "Cortes",
-                        "pages": [
-                            "web/cortes/cortes"
-                        ]
-                    },
-                    {
-                        "group": "Diversos",
-                        "pages": [
-                            "web/diversos/tabela-impostos"
-                        ]
-                    },
-                    {
-                        "group": "Pessoal",
-                        "pages": [
-                            "web/pessoal/FollowUp",
-                            "web/pessoal/Liberao"
-                        ]
-                    },
-                    {
-                        "group": "Integrações",
-                        "pages": [
-                            "web/integracoes/sicoob.mdx"
-                        ]
-                    }
-                ]
+              "group": "Geral",
+              "pages": [
+                "web/geral/favoritos"
+              ]
             },
             {
-                "tab": "Agulhão App",
-                "groups": [
-                    {
-                        "group": "Começando",
-                        "pages": [
-                            "aplicativo/comecando/instalando-aplicativo",
-                            "aplicativo/comecando/entendendo-a-interface",
-                            "aplicativo/comecando/sincronizacao",
-                            "aplicativo/comecando/troca-de-empresa",
-                            "aplicativo/comecando/troca-filial"
-                        ]
-                    },
-                    {
-                        "group": "Clientes",
-                        "pages": [
-                            "aplicativo/clientes/cadastrando-cliente",
-                            "aplicativo/clientes/cobranca",
-                            "aplicativo/clientes/colaborador",
-                            "aplicativo/clientes/inadimplentes"
-                        ]
-                    },
-                    {
-                        "group": "Vendas",
-                        "pages": [
-                            "aplicativo/vendas/forca-vendas",
-                            "aplicativo/vendas/comissao",
-                            "aplicativo/vendas/crm",
-                            "aplicativo/vendas/link-compartilhamento",
-                            "aplicativo/vendas/tabela-preco",
-                            "aplicativo/vendas/venda-balcao"
-                        ]
-                    },
-                    {
-                        "group": "Produtos",
-                        "pages": [
-                            "aplicativo/produtos/produtos",
-                            "aplicativo/produtos/ranking-produtos"
-                        ]
-                    },
-                    {
-                        "group": "Administração",
-                        "pages": [
-                            "aplicativo/administracao/colaborador",
-                            "aplicativo/administracao/conta-atrasada",
-                            "aplicativo/administracao/estatisticas",
-                            "aplicativo/administracao/excecao"
-                        ]
-                    },
-                    {
-                        "group": "Confecção",
-                        "pages": [
-                            "aplicativo/confeccao/acompanhar-producao",
-                            "aplicativo/confeccao/apontamente-parada",
-                            "aplicativo/confeccao/cortes"
-                        ]
-                    }
-                ]
+              "group": "Atualizacoes",
+              "pages": [
+                "web/atualizacoes/Contaa-a-receber"
+              ]
             },
             {
-                "tab": "API",
-                "openapi": "api/openapi.yaml"
+              "group": "Dashboard",
+              "pages": [
+                "web/dashboard/Checklist-Vendedores",
+                "web/dashboard/ClientesXColecoes",
+                "web/dashboard/Resumo-da-colecao",
+                "web/dashboard/Vendars-por-vendedor",
+                "web/dashboard/curva-ABC",
+                "web/dashboard/ponto-do-equilibrio",
+                "web/dashboard/resumo-do-dia",
+                "web/dashboard/vendas-com-poucos-itens",
+                "web/dashboard/vendas-por0tabela-de-preco"
+              ]
             },
             {
-                "tab": "Bitrix24",
-                "openapi": "api-bitrix/openapi.yaml"
+              "group": "Produtos",
+              "pages": [
+                "web/produtos/cadastro-produtos",
+                "web/produtos/cadastro-marcas",
+                "web/produtos/cadastro-departamento",
+                "web/produtos/cadastro-cores",
+                "web/produtos/entrada-produtos",
+                "web/produtos/cadastro-grupos",
+                "web/produtos/Balanco",
+                "web/produtos/alteracao-de-preco-multipla",
+                "web/produtos/alteracao-de-preco-por-quantidade",
+                "web/produtos/relatorio-de-estoque",
+                "web/produtos/relatorio-de-etiquetas"
+              ]
             },
             {
-                "tab": "Convertr",
-                "openapi": "api-convertr/openapi.yaml"
+              "group": "Clientes",
+              "pages": [
+                "web/clientes/frente-caixa",
+                "web/clientes/historico-cliente",
+                "web/clientes/link-compartilhamento",
+                "web/clientes/vale-presente",
+                "web/clientes/checkout",
+                "web/clientes/desconto-sobre-venda",
+                "web/clientes/impresso-de-vendas",
+                "web/clientes/pedidos-de-saida",
+                "web/clientes/siada-de-produto-com-defeito",
+                "web/clientes/troca-de-mercadorias"
+              ]
+            },
+            {
+              "group": "Financeiro",
+              "pages": [
+                "web/financeiro/contas-pagar",
+                "web/financeiro/contas-receber",
+                "web/financeiro/caixa",
+                "web/financeiro/TEF",
+                "web/financeiro/Cashback",
+                "web/financeiro/cobranca-por-whatsapp",
+                "web/financeiro/creditos-debitos",
+                "web/financeiro/homologacao-de-boletos"
+              ]
+            },
+            {
+              "group": "Relatórios",
+              "pages": [
+                "web/relatorios/resumo-vendas"
+              ]
+            },
+            {
+              "group": "Faturamento",
+              "pages": [
+                "web/Faturamento/baixar-xml-receita",
+                "web/Faturamento/condicional-em-aberto",
+                "web/Faturamento/nfe-e-nf-da-devolucao"
+              ]
+            },
+            {
+              "group": "Fornecedores",
+              "pages": [
+                "web/fornecedores/cadastro-de-fornecedor",
+                "web/fornecedores/import"
+              ]
+            },
+            {
+              "group": "Funcionários",
+              "pages": [
+                "web/funcionarios/cadastro-de-funcionario",
+                "web/funcionarios/margem-para-arredondamento"
+              ]
+            },
+            {
+              "group": "Cortes",
+              "pages": [
+                "web/cortes/cortes"
+              ]
+            },
+            {
+              "group": "Diversos",
+              "pages": [
+                "web/diversos/tabela-impostos"
+              ]
+            },
+            {
+              "group": "Pessoal",
+              "pages": [
+                "web/pessoal/FollowUp",
+                "web/pessoal/Liberao"
+              ]
+            },
+            {
+              "group": "Integrações",
+              "pages": [
+                "web/integracoes/sicoob.mdx"
+              ]
             }
-        ],
-        "global": {
-            "anchors": [
-                {
-                    "anchor": "Site",
-                    "href": "https://agulhao.com.br",
-                    "icon": "globe"
-                },
-                {
-                    "anchor": "Teste Grátis",
-                    "href": "https://agulhao.com.br/teste",
-                    "icon": "fire"
-                }
-            ]
+          ]
+        },
+        {
+          "tab": "Agulhão App",
+          "groups": [
+            {
+              "group": "Começando",
+              "pages": [
+                "aplicativo/comecando/instalando-aplicativo",
+                "aplicativo/comecando/entendendo-a-interface",
+                "aplicativo/comecando/sincronizacao",
+                "aplicativo/comecando/troca-de-empresa",
+                "aplicativo/comecando/troca-filial"
+              ]
+            },
+            {
+              "group": "Clientes",
+              "pages": [
+                "aplicativo/clientes/cadastrando-cliente",
+                "aplicativo/clientes/cobranca",
+                "aplicativo/clientes/inadimplentes"
+              ]
+            },
+            {
+              "group": "Vendas",
+              "pages": [
+                "aplicativo/vendas/forca-vendas",
+                "aplicativo/vendas/comissao",
+                "aplicativo/vendas/crm",
+                "aplicativo/vendas/link-compartilhamento",
+                "aplicativo/vendas/tabela-preco",
+                "aplicativo/vendas/venda-balcao"
+              ]
+            },
+            {
+              "group": "Produtos",
+              "pages": [
+                "aplicativo/produtos/produtos",
+                "aplicativo/produtos/ranking-produtos"
+              ]
+            },
+            {
+              "group": "Administração",
+              "pages": [
+                "aplicativo/administracao/colaborador",
+                "aplicativo/administracao/conta-atrasada",
+                "aplicativo/administracao/estatisticas",
+                "aplicativo/administracao/excecao"
+              ]
+            },
+            {
+              "group": "Confecção",
+              "pages": [
+                "aplicativo/confeccao/acompanhar-producao",
+                "aplicativo/confeccao/apontamente-parada",
+                "aplicativo/confeccao/cortes"
+              ]
+            }
+          ]
+        },
+        {
+          "tab": "API",
+          "openapi": "api/openapi.yaml"
+        },
+        {
+          "tab": "Bitrix24",
+          "openapi": "api-bitrix/openapi.yaml"
+        },
+        {
+          "tab": "Convertr",
+          "openapi": "api-convertr/openapi.yaml"
         }
+      ]
     },
     "api": {
         "examples": {
