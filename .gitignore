@@ -1,0 +1,10 @@
+node_modules/
+yarn.lock
+dist/
+coverage/
+.env
+.DS_Store
+.idea/
+.vscode/
+*.log
+*.tsbuildinfo

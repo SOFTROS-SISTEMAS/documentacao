@@ -1,742 +1,1198 @@
 openapi: 3.1.0
 info:
-    title: Agulhão API
-    description: API do sistema Agulhão
-    contact:
-        email: contato@softros.com.br
-        url: https://agulhao.com.br
-    version: 1.0.1
-externalDocs:
-    description: Mais sobre a API
-    url: https://docs.agulhao.com.br/api
-servers:
-    - url: https://api-integracoes.agulhao.com.br
-      description: Produção
+  title: Agulhão API
+  description: API do sistema Agulhão
+  version: 1.0.1
+  contact:
+    email: contato@softros.com.br
+    url: https://agulhao.com.br
 tags:
-    - name: filiais
-    - name: pessoas
-    - name: produtos
-    - name: pedidos
-    - name: tipos-lancamento
-components:
-    securitySchemes:
-        chaveApi:
-            description: Chave da API gerada no agulhão
-            type: apiKey
-            name: x-api-key
-            in: header
+  - name: produtos
+  - name: pedidos
+  - name: pessoas
+  - name: tipos-lancamento
+  - name: filiais
 paths:
-    /produtos:
-        get:
-            operationId: getProdutos
-            tags:
-                - produtos
-            security:
-                - chaveApi: []
-            summary: Retorna produtos
-            description: Retorna lista de produtos cadastrados no Agulhão
-            parameters:
-                - name: pagina
-                  in: query
-                  description: Número da página para paginação dos resultados
-                  schema:
+  /produtos:
+    get:
+      summary: Buscar produtos
+      deprecated: false
+      description: Retorna lista de produtos cadastrados no Agulhão
+      operationId: getProdutos
+      tags:
+        - produtos
+      parameters:
+        - name: pagina
+          in: query
+          description: Número da página para paginação dos resultados
+          required: false
+          schema:
+            type: integer
+            default: 1
+            examples:
+              - 1
+        - name: qtdePorPagina
+          in: query
+          description: Quantidade de produtos por página
+          required: false
+          schema:
+            type: integer
+            default: 100
+            examples:
+              - 10
+        - name: ultimaAtualizacao
+          in: query
+          description: Data da última atualização dos produtos (formato ISO 8601)
+          required: false
+          schema:
+            type: string
+            format: date-time
+            examples:
+              - '2025-01-01T00:00:00Z'
+        - name: marcas
+          in: query
+          description: Filtra produtos por marcas (IDs separados por vírgula)
+          required: false
+          schema:
+            type: string
+            examples:
+              - 1,2,3
+        - name: grupos
+          in: query
+          description: Filtra produtos por departamentos (IDs separados por vírgula)
+          required: false
+          schema:
+            type: string
+            examples:
+              - 1,2,3
+        - name: subGrupos
+          in: query
+          description: Filtra produtos por grupos (IDs separados por vírgula)
+          required: false
+          schema:
+            type: string
+            examples:
+              - 1,2,3
+        - name: fornecedorCod
+          in: query
+          description: Filtra produtos por código do fornecedor
+          required: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '0'
+            examples:
+              - '1'
+        - name: comEstoque
+          in: query
+          description: Filtra produtos que possuem estoque
+          required: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '0'
+            examples:
+              - '1'
+        - name: semEstoque
+          in: query
+          description: Filtra produtos que não possuem estoque
+          required: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '0'
+            examples:
+              - '1'
+        - name: precoMin
+          in: query
+          description: Filtra produtos com preço mínimo
+          required: false
+          schema:
+            type: string
+            examples:
+              - '10.00'
+        - name: precoMax
+          in: query
+          description: Filtra produtos com preço máximo
+          required: false
+          schema:
+            type: string
+            examples:
+              - '100.00'
+        - name: filialCod
+          in: query
+          description: Filtra produtos por código da filial
+          required: false
+          schema:
+            type: string
+            examples:
+              - '1'
+        - name: radioStatus
+          in: query
+          description: Filtra produtos pelo status (A - Ativo, I - Inativo)
+          required: false
+          schema:
+            type: string
+            enum:
+              - A
+              - I
+            examples:
+              - A
+        - name: pesquisa
+          in: query
+          description: Pesquisa pela descrição do produto
+          required: false
+          schema:
+            type: string
+            examples:
+              - Produto
+        - name: codigoOriginal
+          in: query
+          description: Filtra produtos pelo código original
+          required: false
+          schema:
+            type: string
+            examples:
+              - REF123
+        - name: codigoInterno
+          in: query
+          description: Filtra produtos pelo código interno
+          required: false
+          schema:
+            type: string
+            examples:
+              - '1'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
                       type: integer
-                      default: 1
-                      example: 1
-                - name: qtdePorPagina
-                  in: query
-                  description: Quantidade de produtos por página
-                  schema:
+                      description: Identificador único do produto
+                    nomePersonalizado:
+                      type: string
+                      description: Nome personalizado do produto
+                    descricao:
+                      type: string
+                      description: Descrição do produto
+                    nomeAbreviado:
+                      type: string
+                      description: Prod. Abreviado
+                    referencia:
+                      type: string
+                      description: Referência do produto
+                    nome:
+                      type: string
+                      description: Nome do Produto
+                    sexo:
+                      type: string
+                      description: Sexo do produto (M, F, U)
+                      examples:
+                        - M
+                      enum:
+                        - M
+                        - F
+                        - U
+                    marca:
+                      type: string
+                      description: Marca do Produto
+                    altura:
+                      type: number
+                      description: Altura do produto em centímetros
+                    largura:
                       type: integer
-                      default: 100
-                      example: 10
-                - name: ultimaAtualizacao
-                  in: query
-                  description: Data da última atualização dos produtos (formato ISO 8601)
-                  schema:
+                      description: Largura do produto em centímetros
+                    comprimento:
+                      type: integer
+                      description: Comprimento do produto em centímetros
+                    peso:
+                      type: number
+                      description: Peso do produto em kg
+                    unidadeMedidaSigla:
+                      type: string
+                      description: Sigla da unidade de medida do produto
+                    ativo:
+                      type: boolean
+                      description: Indica se o produto está ativo
+                    precoMinimo:
+                      type: integer
+                      description: Preço mínimo do produto
+                    precoMaximo:
+                      type: integer
+                      description: Preço máximo do produto
+                    ultimaAlteracao:
+                      type: string
+                      description: Data da última atualização do produto
+                      examples:
+                        - '2025-01-01T00:00:00Z'
+                    cores:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            description: Identificador único da cor
+                          nome:
+                            type: string
+                            description: Nome da cor
+                          hexadecimal:
+                            type: string
+                            description: Código hexadecimal da cor
+                            examples:
+                              - '#0000FF'
+                          url:
+                            type: string
+                            description: URL da imagem da cor
+                    marcadores:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            description: Identificador único do marcador
+                          nome:
+                            type: string
+                            description: Nome do marcador
+                    imagens:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            description: Identificador único da imagem
+                          url:
+                            type: string
+                            description: URL da imagem do produto
+                          ordem:
+                            type: integer
+                            description: Ordem de exibição da imagem
+                          idCor:
+                            type: integer
+                            description: >-
+                              Identificador da cor associada à imagem (se
+                              aplicável)
+                    grades:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          numero:
+                            type: string
+                            description: Número da grade do produto
+                          id:
+                            type: integer
+                            description: Identificador único da grade do produto
+                          ean:
+                            type: string
+                            description: EAN (código de barras) da grade do produto
+                          idCor:
+                            type: integer
+                            description: >-
+                              Identificador da cor associada à grade do produto
+                              (se aplicável)
+                          preco:
+                            type: number
+                            description: Preço da grade do produto
+                          precoPromocional:
+                            type: number
+                            description: >-
+                              Preço promocional da grade do produto (se
+                              aplicável)
+                          estoque:
+                            type: integer
+                            description: Quantidade em estoque da grade do produto
+              example:
+                - id: 1
+                  nomePersonalizado: Produto Personalizado
+                  descricao: Descrição do produto
+                  nomeAbreviado: Prod. Abreviado
+                  referencia: REF123
+                  nome: Nome do Produto
+                  sexo: M
+                  marca: Marca do Produto
+                  altura: 10.5
+                  largura: 20
+                  comprimento: 30
+                  peso: 0.57
+                  unidadeMedidaSigla: UN
+                  ativo: true
+                  precoMinimo: 10
+                  precoMaximo: 100
+                  ultimaAlteracao: '2025-01-01T00:00:00Z'
+                  cores:
+                    - id: 1
+                      nome: Azul
+                      hexadecimal: '#0000FF'
+                      url: https://example.com/cor-azul.png
+                  marcadores:
+                    - id: 1
+                      nome: Marcador 1
+                  imagens:
+                    - id: 1
+                      url: https://example.com/imagem-produto.png
+                      ordem: 1
+                      idCor: 1
+                  grades:
+                    - numero: M
+                      id: 1
+                      ean: '1234567890123'
+                      idCor: 1
+                      preco: 50
+                      precoPromocional: 45
+                      estoque: 100
+          headers: {}
+      security:
+        - chaveApi: []
+  /pedidos:
+    get:
+      summary: Buscar pedidos
+      deprecated: false
+      description: >-
+        Retorna os pedidos do Agulhão. Para consultar os detalhes de um pedido
+        específico, informe o parâmetro "id" ou "idExterno" (Exemplo 2).
+      operationId: getPedidos
+      tags:
+        - pedidos
+      parameters:
+        - name: filialCod
+          in: query
+          description: Código da filial
+          required: false
+          schema:
+            type: string
+            examples:
+              - '1'
+        - name: clienteCod
+          in: query
+          description: Código do cliente
+          required: false
+          schema:
+            type: string
+            examples:
+              - '1'
+        - name: colecaoCod
+          in: query
+          description: Código da coleção
+          required: false
+          schema:
+            type: string
+            examples:
+              - '1'
+        - name: tipoIntervalo
+          in: query
+          description: >
+            Tipo de intervalo para busca dos pedidos: * '1' - Data emissão * '2'
+            - Data fechamento
+          required: false
+          schema:
+            type: string
+            enum:
+              - '1'
+              - '2'
+        - name: dataInicial
+          in: query
+          description: Data inicial do intervalo (formato dd/MM/yyyy)
+          required: false
+          schema:
+            type: string
+            examples:
+              - 01/01/2025
+        - name: dataFinal
+          in: query
+          description: Data final do intervalo (formato dd/MM/yyyy)
+          required: false
+          schema:
+            type: string
+            examples:
+              - 31/01/2025
+        - name: pagina
+          in: query
+          description: Página atual da busca
+          required: false
+          schema:
+            type: string
+            default: '1'
+        - name: qtdePorPagina
+          in: query
+          description: Quantidade de usuários por página
+          required: false
+          schema:
+            type: string
+            default: '100'
+        - name: tipoPedido
+          in: query
+          description: >-
+            Tipo do pedido (se não informado, por padrão será retornando somente
+            pedidos que são do tipo "Venda"
+          required: false
+          schema:
+            type: string
+            enum:
+              - VB
+              - VE
+              - CM
+              - TD
+        - name: ordemCompra
+          in: query
+          description: Ordem de compra (quando informado o filtro "tipoPedido" é ignorado)
+          required: false
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: ID interno do agulhão
+          required: false
+          schema:
+            type: string
+        - name: idExterno
+          in: query
+          description: Identificador único do pedido na integração (seu id)
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      filialCod:
+                        type: integer
+                      pedidoId:
+                        type: integer
+                      pedidoDataEmissao:
+                        type: string
+                      pedidoDataFechamento:
+                        type: string
+                      pedidoPrevisaoEntrega:
+                        type: string
+                      ultimaAtualizacao:
+                        type: string
+                      pedidoSaidaStatus:
+                        type: string
+                      clienteCod:
+                        type: integer
+                      clienteNome:
+                        type: string
+                      clienteCidade:
+                        type: string
+                      clienteUf:
+                        type: string
+                      vendedorCod:
+                        type: integer
+                      vendedorNome:
+                        type: string
+                      valorLiquido:
+                        type: number
+                      totalPecas:
+                        type: number
+                      ordemCompra:
+                        type: string
+                  - type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: ID do pedido no Agulhão
+                      idExterno:
+                        type: string
+                        description: ID do pedido na integração
+                      integracao:
+                        type: integer
+                        description: ID da integração
+                      linkCompartilhavel:
+                        type: string
+                      ordemCompra:
+                        type: string
+                      tipo:
+                        type: string
+                      descontoDinheiro:
+                        type: number
+                      valorFrete:
+                        type: number
+                      observacoes:
+                        type: string
+                      valorOutros:
+                        type: number
+                      valorLiquido:
+                        type: number
+                      valorBruto:
+                        type: number
+                      status:
+                        type: string
+                      previsaoEntrega:
+                        type: string
+                      cliente:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          documento:
+                            type: string
+                          nome:
+                            type: string
+                      entrega:
+                        type: object
+                        properties:
+                          logradouro:
+                            type: string
+                          complemento:
+                            type: string
+                          numero:
+                            type: string
+                          cep:
+                            type: string
+                          bairro:
+                            type: string
+                          cidade:
+                            type: string
+                          uf:
+                            type: string
+                          ibgeCidade:
+                            type: integer
+                      produtos:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            idGrade:
+                              type: integer
+                            quantidade:
+                              type: number
+                            valorUnitario:
+                              type: number
+                      pagamentos:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            valor:
+                              type: number
+                            descricao:
+                              type: string
+                      duplicatas:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            valor:
+                              type: number
+                            vencimento:
+                              type: string
+                            boletoUrl:
+                              type: string
+                            saldo:
+                              type: number
+                            status:
+                              type: string
+                            codigoBarras:
+                              type: string
+                      ultimaAtualizacao:
+                        type: string
+                      emissao:
+                        type: string
+                      fechamento:
+                        type: string
+                      danfeUrl:
+                        type: string
+                      xmlNfeUrl:
+                        type: string
+              examples:
+                '1':
+                  summary: Retorno da lista de pedidos
+                  value:
+                    - filialCod: 123
+                      pedidoId: 123
+                      pedidoDataEmissao: '2023-11-07T05:31:56Z'
+                      pedidoDataFechamento: '2023-11-07T05:31:56Z'
+                      pedidoPrevisaoEntrega: '2023-11-07T05:31:56Z'
+                      clienteCod: 123
+                      clienteNome: <string>
+                      clienteCidade: <string>
+                      clienteUf: <string>
+                      vendedorCod: 123
+                      vendedorNome: <string>
+                      valorLiquido: 123
+                      ultimaAtualizacao: <string>
+                      totalPecas: 123
+                      ordemCompra: <string>
+                '2':
+                  summary: Retorno do pedido detalhado
+                  value:
+                    id: '1'
+                    idExterno: 4560a17a-ea59-4c4b-a2a4-78610dd04d4a
+                    descontoDinheiro: 10
+                    valorFrete: 15
+                    valorOutros: 5
+                    valorBruto: 100
+                    valorLiquido: 90
+                    observacoes: Observações do pedido
+                    status: <string>
+                    cliente:
+                      documento: '00000000000000'
+                      nome: Nome do Cliente
+                    entrega:
+                      logradouro: Avenida Paulista
+                      complemento: Apto 101
+                      numero: '1000'
+                      bairro: Bela Vista
+                      cidade: São Paulo
+                      uf: SP
+                      ibgeCidade: '3550308'
+                    danfeUrl: https://api.agulhao.com.br/danfe/1234567890.pdf
+                    xmlNfeUrl: https://api.agulhao.com.br/xml/1234567890.xml
+                    previsaoEntrega: '2025-01-01T00:00:00'
+                    ultimaAtualizacao: '2025-01-01T00:00:00'
+                    fechamento: '2025-01-02T00:00:00'
+                    pagamentos:
+                      - descricao: Dinheiro
+                        valor: 100
+                    produtos:
+                      - id: 1
+                        idGrade: 1
+                        quantidade: 1
+                        valorUnitario: 100
+          headers: {}
+      security:
+        - chaveApi: []
+  /pessoas:
+    get:
+      summary: Retorna pessoas
+      deprecated: false
+      description: Retorna lista de pessoas cadastradas no sistema
+      operationId: getPessoas
+      tags:
+        - pessoas
+      parameters:
+        - name: pagina
+          in: query
+          description: Página atual da busca
+          required: false
+          schema:
+            type: string
+            default: '1'
+        - name: qtdePorPagina
+          in: query
+          description: Quantidade de usuários por página
+          required: false
+          schema:
+            type: string
+            default: '100'
+        - name: ultimaAtualizacao
+          in: query
+          description: Retorna apenas usuários que foram atualizados após a data informada
+          required: false
+          schema:
+            type: string
+            format: date-time
+            examples:
+              - '2025-01-01T00:00:00'
+        - name: vendedor
+          in: query
+          description: Retorna apenas usuários que são vendedores
+          required: false
+          schema:
+            type: string
+            default: '0'
+            enum:
+              - '1'
+              - '0'
+        - name: cliente
+          in: query
+          description: Retorna apenas usuários que são clientes
+          required: false
+          schema:
+            type: string
+            default: '0'
+            enum:
+              - '1'
+              - '0'
+        - name: guia
+          in: query
+          description: Retorna apenas usuários que são guias
+          required: false
+          schema:
+            type: string
+            default: '0'
+            enum:
+              - '1'
+              - '0'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Identificador único do usuário
+                      examples:
+                        - '1'
+                    razaoSocial:
+                      type: string
+                      description: Razão social do usuário
+                      examples:
+                        - RAZÃO SOCIAL DA EMPRESA
+                    documento:
+                      type: string
+                      description: CNPJ ou CPF do usuário
+                      examples:
+                        - '00000000000000'
+                    fantasia:
+                      type: string
+                      description: Nome fantasia do usuário
+                      examples:
+                        - FANTASIA DA EMPRESA
+                    email:
+                      type: string
+                      description: E-mail do usuário
+                      examples:
+                        - contato@empresa.com
+                    telefone:
+                      type: string
+                      description: Telefone do usuário
+                      examples:
+                        - '1112345678'
+                    celular:
+                      type: string
+                      description: Celular do usuário
+                      examples:
+                        - '11912345678'
+                    guia:
+                      type: boolean
+                      description: Indica se o usuário é um guia
+                      examples:
+                        - true
+                    vendedor:
+                      type: boolean
+                      description: Indica se o usuário é um vendedor
+                      examples:
+                        - false
+                    cliente:
+                      type: boolean
+                      description: Indica se o usuário é um cliente
+                      examples:
+                        - true
+                    ultimaAtualizacao:
                       type: string
                       format: date-time
-                      example: '2025-01-01T00:00:00Z'
-                - name: marcas
-                  in: query
-                  description: Filtra produtos por marcas (IDs separados por vírgula)
-                  schema:
+                      description: Data da última atualização do usuário
+                      examples:
+                        - '2025-01-01T00:00:00'
+                    endereco:
+                      type: object
+                      properties:
+                        cidadeId:
+                          type: string
+                          description: Identificador da cidade do endereço (Código IBGE)
+                          examples:
+                            - '1'
+                        cidadeNome:
+                          type: string
+                          description: Nome da cidade do endereço
+                          examples:
+                            - São Paulo
+                        uf:
+                          type: string
+                          description: Sigla da unidade federativa do endereço
+                          examples:
+                            - SP
+                        cep:
+                          type: string
+                          description: CEP do endereço
+                          examples:
+                            - '01000000'
+                        logradouro:
+                          type: string
+                          description: Logradouro do endereço
+                          examples:
+                            - Avenida Paulista
+                        numero:
+                          type: string
+                          description: Número do endereço
+                          examples:
+                            - '1000'
+                        complemento:
+                          type: string
+                          description: Complemento do endereço
+                          examples:
+                            - Apto 101
+                        bairro:
+                          type: string
+                          description: Bairro do endereço
+                          examples:
+                            - Bela Vista
+          headers:
+            x-tem-proxima-pagina:
+              required: false
+              description: Indica se há uma próxima página de resultados
+              schema:
+                type: string
+                example:
+                  - 'true'
+                  - 'false'
+            x-pagina:
+              required: false
+              description: Página atual da busca
+              schema:
+                type: string
+                example: '1'
+            x-qtde-por-pagina:
+              required: false
+              description: Quantidade de usuários por página
+              schema:
+                type: string
+                example: '100'
+      security:
+        - chaveApi: []
+  /pessoas/financeiro:
+    get:
+      summary: Retorna pessoa com o seu financeiro
+      deprecated: false
+      description: Retorna pessoa específica com o seu financeiro (duplicatas em aberto)
+      operationId: getPessoasFinanceiro
+      tags:
+        - pessoas
+      parameters:
+        - name: id
+          in: query
+          description: Identificador único do usuário
+          required: false
+          schema:
+            type: string
+            examples:
+              - '1'
+        - name: duplicataId
+          in: query
+          description: Identificador único da duplicata
+          required: false
+          schema:
+            type: string
+            examples:
+              - '1'
+        - name: pedidoId
+          in: query
+          description: Identificador único do pedido
+          required: false
+          schema:
+            type: string
+            examples:
+              - '1'
+        - name: documento
+          in: query
+          description: CNPJ ou CPF do usuário
+          required: false
+          schema:
+            type: string
+            examples:
+              - '00000000000000'
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
                       type: string
-                      example: '1,2,3'
-                - name: grupos
-                  in: query
-                  description: Filtra produtos por departamentos (IDs separados por vírgula)
-                  schema:
+                      description: Identificador único do usuário
+                      examples:
+                        - '1'
+                    razaoSocial:
                       type: string
-                      example: '1,2,3'
-                - name: subGrupos
-                  in: query
-                  description: Filtra produtos por grupos (IDs separados por vírgula)
-                  schema:
+                      description: Razão social do usuário
+                      examples:
+                        - RAZÃO SOCIAL DA EMPRESA
+                    documento:
                       type: string
-                      example: '1,2,3'
-                - name: fornecedorCod
-                  in: query
-                  description: Filtra produtos por código do fornecedor
-                  schema:
+                      description: CNPJ ou CPF do usuário
+                      examples:
+                        - '00000000000000'
+                    fantasia:
                       type: string
-                      example: '1'
-                      enum:
-                          - '1'
-                          - '0'
-                - name: comEstoque
-                  in: query
-                  description: Filtra produtos que possuem estoque
-                  schema:
+                      description: Nome fantasia do usuário
+                      examples:
+                        - FANTASIA DA EMPRESA
+                    email:
                       type: string
-                      example: '1'
-                      enum:
-                          - '1'
-                          - '0'
-                - name: semEstoque
-                  in: query
-                  description: Filtra produtos que não possuem estoque
-                  schema:
+                      description: E-mail do usuário
+                      examples:
+                        - contato@empresa.com
+                    telefone:
                       type: string
-                      example: '1'
-                      enum:
-                          - '1'
-                          - '0'
-                - name: precoMin
-                  in: query
-                  description: Filtra produtos com preço mínimo
-                  schema:
+                      description: Telefone do usuário
+                      examples:
+                        - '1112345678'
+                    celular:
                       type: string
-                      example: '10.00'
-                - name: precoMax
-                  in: query
-                  description: Filtra produtos com preço máximo
-                  schema:
-                      type: string
-                      example: '100.00'
-                - name: filialCod
-                  in: query
-                  description: Filtra produtos por código da filial
-                  schema:
-                      type: string
-                      example: '1'
-                - name: radioStatus
-                  in: query
-                  description: Filtra produtos pelo status (A - Ativo, I - Inativo)
-                  schema:
-                      type: string
-                      example: 'A'
-                      enum:
-                          - A
-                          - I
-                - name: pesquisa
-                  in: query
-                  description: Pesquisa pela descrição do produto
-                  schema:
-                      type: string
-                      example: 'Produto'
-                - name: codigoOriginal
-                  in: query
-                  description: Filtra produtos pelo código original
-                  schema:
-                      type: string
-                      example: 'REF123'
-                - name: codigoInterno
-                  in: query
-                  description: Filtra produtos pelo código interno
-                  schema:
-                      type: string
-                      example: '1'
-            responses:
-                '200':
-                    description: Sucesso
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    type: object
-                                    properties:
-                                        produtoCodigo:
-                                            type: number
-                                            description: Identificador único do produto
-                                            example: 1
-                                        produtoDescricao:
-                                            type: string
-                                            description: Descrição do produto
-                                            example: 'Produto Personalizado'
-                                        produtoReferencia:
-                                            type: string
-                                            description: Referência do produto
-                                            example: 'REF123'
-                                        marcaNome:
-                                            type: string
-                                            description: Nome da marca do produto
-                                            example: 'Marca Exemplo'
-    /pedidos:
-        get:
-            operationId: getPedidos
-            tags:
-                - pedidos
-            security:
-                - chaveApi: []
-            summary: Retorna pedidos
-            description: Retorna pedidos do Agulhão
-            parameters:
-                - name: filialCod
-                  in: query
-                  description: Código da filial
-                  schema:
-                      type: string
-                      example: '1'
-                - name: clienteCod
-                  in: query
-                  description: Código do cliente
-                  schema:
-                      type: string
-                      example: '1'
-                - name: colecaoCod
-                  in: query
-                  description: Código da coleção
-                  schema:
-                      type: string
-                      example: '1'
-                - name: tipoIntervalo
-                  in: query
-                  description: >
-                      Tipo de intervalo para busca dos pedidos:
-                      * '1' - Data emissão
-                      * '2' - Data fechamento
-                  schema:
-                      type: string
-                      enum:
-                          - '1'
-                          - '2'
-                - name: dataInicial
-                  in: query
-                  description: Data inicial do intervalo (formato dd/MM/yyyy)
-                  schema:
-                      type: string
-                      example: '01/01/2025'
-                - name: dataFinal
-                  in: query
-                  description: Data final do intervalo (formato dd/MM/yyyy)
-                  schema:
-                      type: string
-                      example: '31/01/2025'
-                - name: pagina
-                  in: query
-                  description: Página atual da busca
-                  schema:
-                      type: string
-                      default: '1'
-                - name: qtdePorPagina
-                  in: query
-                  description: Quantidade de usuários por página
-                  schema:
-                      type: string
-                      default: '100'
-            responses:
-                '200':
-                    description: Sucesso
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    type: object
-                                    properties:
-                                        filialCod:
-                                            type: number
-                                            description: Código da filial
-                                            example: 1
-                                        pedidoId:
-                                            type: number
-                                            description: Identificador único do pedido
-                                            example: 1
-                                        pedidoDataEmissao:
-                                            type: string
-                                            format: date-time
-                                            description: Data de emissão do pedido
-                                            example: '2025-01-01T00:00:00'
-                                        pedidoDataFechamento:
-                                            type: string
-                                            format: date-time
-                                            description: Data de emissão do pedido
-                                            example: '2025-01-01T00:00:00'
-                                        pedidoPrevisaoEntrega:
-                                            type: string
-                                            format: date-time
-                                            description: Data de emissão do pedido
-                                            example: '2025-01-01T00:00:00'
-                                        pedidoSaidaStatus:
-                                            type: string
-                                            description: Status do pedido
-                                            example: 'Digitando'
-                                            enum:
-                                                - Digitando
-                                                - Analisando
-                                                - Aprovando
-                                                - Aguardando data envio
-                                                - PCP/Produzindo
-                                                - Separando
-                                                - Conferindo
-                                                - Faturando
-                                                - Despachado
-                                                - Cancelado
-                                        clienteCod:
-                                            type: number
-                                            description: Código do cliente
-                                            example: 1
-                                        clienteNome:
-                                            type: string
-                                            description: Nome do cliente
-                                            example: 'Nome do Cliente'
-                                        clienteCidade:
-                                            type: string
-                                            description: Cidade do cliente
-                                            example: 'São Paulo'
-                                        clienteUf:
-                                            type: string
-                                            description: UF do cliente
-                                            example: 'SP'
-                                        vendedorCod:
-                                            type: number
-                                            description: Código do vendedor
-                                            example: 1
-                                        vendedorNome:
-                                            type: string
-                                            description: Nome do vendedor
-                                            example: 'Nome do Vendedor'
-                                        valorLiquido:
-                                            type: number
-                                            format: float
-                                            description: Valor líquido do pedido
-                                            example: 1000.00
-                                        totalPecas:
-                                            type: number
-                                            format: float
-                                            description: Total de peças no pedido
-                                            example: 10
-    /pessoas:
-        get:
-            operationId: getPessoas
-            tags:
-                - pessoas
-            security:
-                - chaveApi: []
-            summary: Retorna pessoas
-            description: Retorna lista de pessoas cadastradas no sistema
-            parameters:
-                - name: pagina
-                  in: query
-                  description: Página atual da busca
-                  schema:
-                      type: string
-                      default: '1'
-                - name: qtdePorPagina
-                  in: query
-                  description: Quantidade de usuários por página
-                  schema:
-                      type: string
-                      default: '100'
-                - name: ultimaAtualizacao
-                  in: query
-                  description: Retorna apenas usuários que foram atualizados após a data informada
-                  schema:
+                      description: Celular do usuário
+                      examples:
+                        - '11912345678'
+                    ultimaAtualizacao:
                       type: string
                       format: date-time
-                      example: '2025-01-01T00:00:00'
-                - name: vendedor
-                  in: query
-                  description: Retorna apenas usuários que são vendedores
-                  schema:
+                      description: Data da última atualização do usuário
+                      examples:
+                        - '2025-01-01T00:00:00'
+                    endereco:
+                      type: object
+                      properties:
+                        cidadeId:
+                          type: string
+                          description: Identificador da cidade do endereço (Código IBGE)
+                          examples:
+                            - '1'
+                        cidadeNome:
+                          type: string
+                          description: Nome da cidade do endereço
+                          examples:
+                            - São Paulo
+                        uf:
+                          type: string
+                          description: Sigla da unidade federativa do endereço
+                          examples:
+                            - SP
+                        cep:
+                          type: string
+                          description: CEP do endereço
+                          examples:
+                            - '01000000'
+                        logradouro:
+                          type: string
+                          description: Logradouro do endereço
+                          examples:
+                            - Avenida Paulista
+                        numero:
+                          type: string
+                          description: Número do endereço
+                          examples:
+                            - '1000'
+                        complemento:
+                          type: string
+                          description: Complemento do endereço
+                          examples:
+                            - Apto 101
+                        bairro:
+                          type: string
+                          description: Bairro do endereço
+                          examples:
+                            - Bela Vista
+                    duplicatas:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            description: Identificador único da duplicata
+                            examples:
+                              - '1'
+                          filialId:
+                            type: string
+                            description: Identificador da filial da duplicata
+                            examples:
+                              - '1'
+                          filialNome:
+                            type: string
+                            description: Nome da filial da duplicata
+                            examples:
+                              - Filial 1
+                          emissao:
+                            type: string
+                            format: date-time
+                            description: Data de emissão da duplicata
+                            examples:
+                              - '2025-01-01T00:00:00'
+                          vencimento:
+                            type: string
+                            format: date-time
+                            description: Data de vencimento da duplicata
+                            examples:
+                              - '2025-02-01T00:00:00'
+                          numero:
+                            type: string
+                            description: Número da duplicata
+                            examples:
+                              - '123456'
+                          localCobrancaId:
+                            type: string
+                            description: Identificador do local de cobrança da duplicata
+                            examples:
+                              - '1'
+                          valor:
+                            type: number
+                            format: float
+                            description: Valor da duplicata
+                            examples:
+                              - 1000
+                          saldo:
+                            type: number
+                            format: float
+                            description: Saldo da duplicata
+                            examples:
+                              - 500
+                          diasAtrasado:
+                            type: integer
+                            description: Dias de atraso da duplicata
+                            examples:
+                              - 10
+                          diasVencer:
+                            type: integer
+                            description: Dias para vencer da duplicata
+                            examples:
+                              - 5
+          headers: {}
+        '400':
+          description: Parâmetros inválidos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    examples:
+                      - >-
+                        Parâmetros inválidos. Informe o id da pessoa,
+                        duplicataId ou pedidoId.
+          headers: {}
+        '404':
+          description: Usuário não encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    examples:
+                      - Pessoa não encontrada.
+          headers: {}
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mensagem:
+                    type: string
+                    examples:
+                      - Erro ao buscar financeiro da pessoa.
+          headers: {}
+      security:
+        - chaveApi: []
+  /tipos-lancamento:
+    get:
+      summary: Busca tipos de lançamento disponíveis
+      deprecated: false
+      description: Retorna lista com os tipos de lançamento
+      operationId: getTiposLancamento
+      tags:
+        - tipos-lancamento
+      parameters: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
                       type: string
-                      default: '0'
-                      enum:
-                          - '1'
-                          - '0'
-
-                - name: cliente
-                  in: query
-                  description: Retorna apenas usuários que são clientes
-                  schema:
+                      description: Identificador do tipo de lançamento
+                      examples:
+                        - '1'
+                    descricao:
                       type: string
-                      default: '0'
-                      enum:
-                          - '1'
-                          - '0'
-
-                - name: guia
-                  in: query
-                  description: Retorna apenas usuários que são guias
-                  schema:
+                      description: Descrição do tipo de lançamento
+                      examples:
+                        - VENDA
+          headers: {}
+      security:
+        - chaveApi: []
+  /filiais:
+    get:
+      summary: Busca filiais disponíveis
+      deprecated: false
+      description: Retorna as filiais que a integração tem permissão de acessar
+      operationId: getFiliais
+      tags:
+        - filiais
+      parameters: []
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
                       type: string
-                      default: '0'
-                      enum:
-                          - '1'
-                          - '0'
-
-            responses:
-                '200':
-                    description: Sucesso
-                    headers:
-                        x-tem-proxima-pagina:
-                            description: Indica se há uma próxima página de resultados
-                            schema:
-                                type: string
-                                example: ['true', 'false']
-                        x-pagina:
-                            description: Página atual da busca
-                            schema:
-                                type: string
-                                example: '1'
-                        x-qtde-por-pagina:
-                            description: Quantidade de usuários por página
-                            schema:
-                                type: string
-                                example: '100'
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    type: object
-                                    properties:
-                                        id:
-                                            type: string
-                                            description: Identificador único do usuário
-                                            example: '1'
-                                        razaoSocial:
-                                            type: string
-                                            description: Razão social do usuário
-                                            example: 'RAZÃO SOCIAL DA EMPRESA'
-                                        documento:
-                                            type: string
-                                            description: CNPJ ou CPF do usuário
-                                            example: '00000000000000'
-                                        fantasia:
-                                            type: string
-                                            description: Nome fantasia do usuário
-                                            example: 'FANTASIA DA EMPRESA'
-                                        email:
-                                            type: string
-                                            description: E-mail do usuário
-                                            example: 'contato@empresa.com'
-                                        telefone:
-                                            type: string
-                                            description: Telefone do usuário
-                                            example: '1112345678'
-                                        celular:
-                                            type: string
-                                            description: Celular do usuário
-                                            example: '11912345678'
-                                        guia:
-                                            type: boolean
-                                            description: Indica se o usuário é um guia
-                                            example: true
-                                        vendedor:
-                                            type: boolean
-                                            description: Indica se o usuário é um vendedor
-                                            example: false
-                                        cliente:
-                                            type: boolean
-                                            description: Indica se o usuário é um cliente
-                                            example: true
-                                        ultimaAtualizacao:
-                                            type: string
-                                            format: date-time
-                                            description: Data da última atualização do usuário
-                                            example: '2025-01-01T00:00:00'
-                                        endereco:
-                                            type: object
-                                            properties:
-                                                cidadeId:
-                                                    type: string
-                                                    description: Identificador da cidade do endereço (Código IBGE)
-                                                    example: '1'
-                                                cidadeNome:
-                                                    type: string
-                                                    description: Nome da cidade do endereço
-                                                    example: 'São Paulo'
-                                                uf:
-                                                    type: string
-                                                    description: Sigla da unidade federativa do endereço
-                                                    example: 'SP'
-                                                cep:
-                                                    type: string
-                                                    description: CEP do endereço
-                                                    example: '01000000'
-                                                logradouro:
-                                                    type: string
-                                                    description: Logradouro do endereço
-                                                    example: 'Avenida Paulista'
-                                                numero:
-                                                    type: string
-                                                    description: Número do endereço
-                                                    example: '1000'
-                                                complemento:
-                                                    type: string
-                                                    description: Complemento do endereço
-                                                    example: 'Apto 101'
-                                                bairro:
-                                                    type: string
-                                                    description: Bairro do endereço
-                                                    example: 'Bela Vista'
-    /pessoas/financeiro:
-        get:
-            operationId: getPessoasFinanceiro
-            tags:
-                - pessoas
-            security:
-                - chaveApi: []
-            summary: Retorna pessoa com o seu financeiro
-            description: Retorna pessoa específica com o seu financeiro (duplicatas em aberto)
-            parameters:
-                - name: id
-                  in: query
-                  description: Identificador único do usuário
-                  schema:
+                      description: Identificador único da filial
+                      examples:
+                        - '1'
+                    razaoSocial:
                       type: string
-                      example: '1'
-                - name: duplicataId
-                  in: query
-                  description: Identificador único da duplicata
-                  schema:
+                      description: Razão social completa da filial
+                      examples:
+                        - RAZÃO SOCIAL DA EMPRESA
+                    cnpj:
                       type: string
-                      example: '1'
-                - name: pedidoId
-                  in: query
-                  description: Identificador único do pedido
-                  schema:
+                      description: CNPJ da filial
+                      examples:
+                        - '00000000000000'
+                    fantasia:
                       type: string
-                      example: '1'
-                - name: documento
-                  in: query
-                  description: CNPJ ou CPF do usuário
-                  schema:
-                      type: string
-                      example: '00000000000000'
-            responses:
-                '200':
-                    description: Sucesso
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    type: object
-                                    properties:
-                                        id:
-                                            type: string
-                                            description: Identificador único do usuário
-                                            example: '1'
-                                        razaoSocial:
-                                            type: string
-                                            description: Razão social do usuário
-                                            example: 'RAZÃO SOCIAL DA EMPRESA'
-                                        documento:
-                                            type: string
-                                            description: CNPJ ou CPF do usuário
-                                            example: '00000000000000'
-                                        fantasia:
-                                            type: string
-                                            description: Nome fantasia do usuário
-                                            example: 'FANTASIA DA EMPRESA'
-                                        email:
-                                            type: string
-                                            description: E-mail do usuário
-                                            example: 'contato@empresa.com'
-                                        telefone:
-                                            type: string
-                                            description: Telefone do usuário
-                                            example: '1112345678'
-                                        celular:
-                                            type: string
-                                            description: Celular do usuário
-                                            example: '11912345678'
-                                        ultimaAtualizacao:
-                                            type: string
-                                            format: date-time
-                                            description: Data da última atualização do usuário
-                                            example: '2025-01-01T00:00:00'
-                                        endereco:
-                                            type: object
-                                            properties:
-                                                cidadeId:
-                                                    type: string
-                                                    description: Identificador da cidade do endereço (Código IBGE)
-                                                    example: '1'
-                                                cidadeNome:
-                                                    type: string
-                                                    description: Nome da cidade do endereço
-                                                    example: 'São Paulo'
-                                                uf:
-                                                    type: string
-                                                    description: Sigla da unidade federativa do endereço
-                                                    example: 'SP'
-                                                cep:
-                                                    type: string
-                                                    description: CEP do endereço
-                                                    example: '01000000'
-                                                logradouro:
-                                                    type: string
-                                                    description: Logradouro do endereço
-                                                    example: 'Avenida Paulista'
-                                                numero:
-                                                    type: string
-                                                    description: Número do endereço
-                                                    example: '1000'
-                                                complemento:
-                                                    type: string
-                                                    description: Complemento do endereço
-                                                    example: 'Apto 101'
-                                                bairro:
-                                                    type: string
-                                                    description: Bairro do endereço
-                                                    example: 'Bela Vista'
-                                        duplicatas:
-                                            type: array
-                                            items:
-                                                type: object
-                                                properties:
-                                                    id:
-                                                        type: string
-                                                        description: Identificador único da duplicata
-                                                        example: '1'
-                                                    filialId:
-                                                        type: string
-                                                        description: Identificador da filial da duplicata
-                                                        example: '1'
-                                                    filialNome:
-                                                        type: string
-                                                        description: Nome da filial da duplicata
-                                                        example: 'Filial 1'
-                                                    emissao:
-                                                        type: string
-                                                        format: date-time
-                                                        description: Data de emissão da duplicata
-                                                        example: '2025-01-01T00:00:00'
-                                                    vencimento:
-                                                        type: string
-                                                        format: date-time
-                                                        description: Data de vencimento da duplicata
-                                                        example: '2025-02-01T00:00:00'
-                                                    numero:
-                                                        type: string
-                                                        description: Número da duplicata
-                                                        example: '123456'
-                                                    localCobrancaId:
-                                                        type: string
-                                                        description: Identificador do local de cobrança da duplicata
-                                                        example: '1'
-                                                    valor:
-                                                        type: number
-                                                        format: float
-                                                        description: Valor da duplicata
-                                                        example: 1000.00
-                                                    saldo:
-                                                        type: number
-                                                        format: float
-                                                        description: Saldo da duplicata
-                                                        example: 500.00
-                                                    diasAtrasado:
-                                                        type: integer
-                                                        description: Dias de atraso da duplicata
-                                                        example: 10
-                                                    diasVencer:
-                                                        type: integer
-                                                        description: Dias para vencer da duplicata
-                                                        example: 5
-                '400':
-                    description: Parâmetros inválidos
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                properties:
-                                    mensagem:
-                                        type: string
-                                        example: 'Parâmetros inválidos. Informe o id da pessoa, duplicataId ou pedidoId.'
-                '404':
-                    description: Usuário não encontrado
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                properties:
-                                    mensagem:
-                                        type: string
-                                        example: 'Pessoa não encontrada.'
-                '500':
-                    description: Erro interno do servidor
-                    content:
-                        application/json:
-                            schema:
-                                type: object
-                                properties:
-                                    mensagem:
-                                        type: string
-                                        example: 'Erro ao buscar financeiro da pessoa.'
-    /tipos-lancamento:
-        get:
-            operationId: getTiposLancamento
-            tags:
-                - 'tipos-lancamento'
-            security:
-                - chaveApi: []
-            summary: Busca tipos de lançamento disponíveis
-            description: Retorna lista com os tipos de lançamento
-            responses:
-                '200':
-                    description: Sucesso
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    type: object
-                                    properties:
-                                        id:
-                                            type: string
-                                            description: Identificador do tipo de lançamento
-                                            example: '1'
-                                        descricao:
-                                            type: string
-                                            description: Descrição do tipo de lançamento
-                                            example: 'VENDA'
-    /filiais:
-        get:
-            tags:
-                - filiais
-            security:
-                - chaveApi: []
-            summary: Busca filiais disponíveis
-            description: Retorna as filiais que a integração tem permissão de acessar
-            operationId: getFiliais
-            responses:
-                '200':
-                    description: Sucesso
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    type: object
-                                    properties:
-                                        id:
-                                            type: string
-                                            description: Identificador único da filial
-                                            example: '1'
-                                        razaoSocial:
-                                            type: string
-                                            description: Razão social completa da filial
-                                            example: 'RAZÃO SOCIAL DA EMPRESA'
-                                        cnpj:
-                                            type: string
-                                            description: CNPJ da filial
-                                            example: '00000000000000'
-                                        fantasia:
-                                            type: string
-                                            description: Nome fantasia da filial
-                                            example: 'FANTASIA'
+                      description: Nome fantasia da filial
+                      examples:
+                        - FANTASIA
+          headers: {}
+      security:
+        - chaveApi: []
+webhooks: {}
+components:
+  schemas: {}
+  responses: {}
+  securitySchemes:
+    chaveApi:
+      description: Chave da API gerada no agulhão
+      type: apiKey
+      name: x-api-key
+      in: header
+servers:
+  - url: https://api-integracoes.agulhao.com.br
+    description: Produção
+security:
+  - chaveApi: []
